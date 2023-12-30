@@ -15,6 +15,11 @@ ApplicationWindow {
         anchors.fill: parent
 
         // Defina variáveis para armazenar os dados dos campos de texto
+        Image {
+            id: backgroundImage
+            source: "images/wallpaper.jpg" // Substitua pelo caminho real da sua imagem
+            fillMode: Image.Stretch
+        }
 
         Row {
             anchors.horizontalCenter: parent.horizontalCenter // Centralizar na horizontal

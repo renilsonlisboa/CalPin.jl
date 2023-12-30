@@ -3,16 +3,20 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
 import Qt.labs.platform
-import org.julialang
 
 ApplicationWindow {
     visible: true
-    width: 400
-    height: 200
+    width: 640
+    height: 480
     title: "CalPin"
+    maximumHeight: height
+    maximumWidth: width
 
     Rectangle {
-        anchors.fill: parent
+        id: retangulo
+        visible: true
+        width: parent.width
+        height: parent.height
 
         Image {
             id: backgroundImage
@@ -20,90 +24,98 @@ ApplicationWindow {
             fillMode: Image.Stretch
         }
 
-        Column {
+        ComboBox {
+            id: comboBox
             anchors.centerIn: parent
-            spacing: 10
+            width: 480
+            anchors.verticalCenterOffset: -75
+            height: 30
+            currentIndex: 0
 
-            Button {
-                text: "Volume Pinus caribaea hondurensis"
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: implicitWidth
-                font.italic: true
-                onClicked: {
-                    // Adicione a lógica aqui
-                    var vpchwindow = Qt.createComponent("vpch.qml")
-                    if (vpchwindow.status === Component.Ready) {
-                        var vpchwindowObject = vpchwindow.createObject(parent);
-
-                      // Mostre a nova janela
-                      vpchwindowObject.show();
-                  } else {
-                      console.error("Falha ao criar a nova janela:", vpchwindow.errorString());
-                  }
+            model: ListModel {
+                ListElement {
+                    text: "Altura"
+                }
+                ListElement {
+                    text: "Volume"
                 }
             }
-            Button {
-                text: "Volume Pinus taeda"
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: implicitWidth
-                font.italic: true
-                onClicked: {
-                    // Adicione a lógica aqui
-                    var vptawindow = Qt.createComponent("vpta.qml")
-                    if (vptawindow.status === Component.Ready) {
-                        var vptawindowObject = vptawindow.createObject(parent);
 
-                      // Mostre a nova janela
-                      vptawindowObject.show();
-                  } else {
-                      console.error("Falha ao criar a nova janela:", vptawindow.errorString());
-                  }
+            // Usar um ItemDelegate personalizado para centralizar o texto
+            delegate: ItemDelegate {
+                width: comboBox.width
+                height: comboBox.height
+
+                contentItem: Text {
+                    text: model.text
+                    anchors.centerIn: parent
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
-            Button {
-                text: "Altura Pinus taeda"
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: implicitWidth
-                font.italic: true
-                onClicked: {
-                    // Adicione a lógica aqui
-                    var hptawindow = Qt.createComponent("hpta.qml")
-                    if (hptawindow.status === Component.Ready) {
-                        var hptawindowObject = hptawindow.createObject(parent);
+        }
 
-                      // Mostre a nova janela
-                      hptawindowObject.show();
-                  } else {
-                      console.error("Falha ao criar a nova janela:", hptawindow.errorString());
-                  }
-                }
+        ComboBox {
+            id: comboBox2
+            anchors.centerIn: parent
+            width: 480
+            anchors.verticalCenterOffset: 25
+            height: 30
+            currentIndex: 0
+
+            property var alturaOptions: ListModel {ListElement {text: "Pinus maximinoi"} ListElement {text: "Pinus taeda"}}
+            property var volumeOptions: ListModel {ListElement {text: "Pinus caribaea hondurensis"} ListElement {text: "Pinus taeda"}}
+
+            function updateComboBox2() {
+                comboBox2.model = comboBox.currentIndex === 0 ? alturaOptions : volumeOptions
             }
-            Button {
-                text: "Altura Pinus maximinoi"
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: implicitWidth
-                font.italic: true
-                onClicked: {
-                    // Adicione a lógica aqui
+
+            Component.onCompleted: {
+                updateComboBox2()
+            }
+        }
+
+        Button {
+            text: qsTr("Iniciar Processamento")
+            anchors.centerIn: parent
+            anchors.verticalCenterOffset: 150
+            onClicked: {
+                if (comboBox.currentIndex === 0
+                        && comboBox2.currentIndex === 0) {
                     var hpmawindow = Qt.createComponent("hpma.qml")
                     if (hpmawindow.status === Component.Ready) {
-                        var hpmawindowObject = hpmawindow.createObject(parent);
+                        var hpmawindowObject = hpmawindow.createObject(parent)
 
-                      // Mostre a nova janela
-                      hpmawindowObject.show();
-                  } else {
-                      console.error("Falha ao criar a nova janela:", hpmawindow.errorString());
-                  }
-                }
-            }
-            Button {
-                text: "Sair"
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: implicitWidth
-                font.italic: true
-                onClicked: {
-                    // Adicione a lógica aqui
-                    Qt.quit()
+                        // Mostre a nova janela
+                        hpmawindowObject.show()
+                    }
+                } else if (comboBox.currentIndex === 0
+                           && comboBox2.currentIndex === 1) {
+                    var hptawindow = Qt.createComponent("hpta.qml")
+                    if (hptawindow.status === Component.Ready) {
+                        var hptawindowObject = hptawindow.createObject(parent)
+
+                        // Mostre a nova janela
+                        hptawindowObject.show()
+                    }
+                } else if (comboBox.currentIndex === 1
+                           && comboBox2.currentIndex === 0) {
+                    var vpchwindow = Qt.createComponent("vpch.qml")
+                    if (vpchwindow.status === Component.Ready) {
+                        var vpchwindowObject = vpchwindow.createObject(parent)
+
+                        // Mostre a nova janela
+                        vpchwindowObject.show()
+                    }
+                } else if (comboBox.currentIndex === 1
+                           && comboBox2.currentIndex === 1) {
+                    var vptawindow = Qt.createComponent("vpta.qml")
+                    if (vptawindow.status === Component.Ready) {
+                        var vptawindowObject = vptawindow.createObject(parent)
+
+                        // Mostre a nova janela
+                        vptawindowObject.show()
+                    }
                 }
             }
         }
