@@ -53,6 +53,11 @@ ApplicationWindow {
                     verticalAlignment: Text.AlignVCenter
                 }
             }
+
+            // Conectar a função de atualização ao sinal currentIndexChanged
+            onCurrentIndexChanged: {
+                updateComboBox2();
+            }
         }
 
         ComboBox {
@@ -63,15 +68,20 @@ ApplicationWindow {
             height: 30
             currentIndex: 0
 
-            property var alturaOptions: ListModel {ListElement {text: "Pinus maximinoi"} ListElement {text: "Pinus taeda"}}
-            property var volumeOptions: ListModel {ListElement {text: "Pinus caribaea hondurensis"} ListElement {text: "Pinus taeda"}}
+            property var alturaOptions: ListModel {
+                id: alturaOptions
+                ListElement { text: "Pinus maximinoi" }
+                ListElement { text: "Pinus taeda" }
+            }
 
-            function updateComboBox2() {
-                comboBox2.model = comboBox.currentIndex === 0 ? alturaOptions : volumeOptions
+            property var volumeOptions: ListModel {
+                id: volumeOptions
+                ListElement { text: "Pinus caribaea hondurensis" }
+                ListElement { text: "Pinus taeda" }
             }
 
             Component.onCompleted: {
-                updateComboBox2()
+                updateComboBox2();
             }
         }
 
@@ -119,5 +129,8 @@ ApplicationWindow {
                 }
             }
         }
+    }
+    function updateComboBox2() {
+        comboBox2.model = comboBox.currentIndex === 0 ? alturaOptions : volumeOptions;
     }
 }
