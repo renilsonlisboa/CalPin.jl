@@ -19,6 +19,10 @@ export CalcPin
     function saveFile(Resultado, uri)
         Save.saveFile(Resultado, uri)
     end
+
+    function vpch(d, h, v, save)
+        Volume.vpch(d, h, v, save)
+    end
     
     # Define a função de inicialização do app
     function CalcPin()
