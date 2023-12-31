@@ -20,15 +20,31 @@ export CalcPin
         Save.saveFile(Resultado, uri)
     end
 
+    # Função de calibração da altura do Pinus maximinoi
+    function hpma(d, h, save)
+        Altura.hpma(d, h, save)
+    end
+        
+    # Função de calibração do altura do Pinus taeda
+    function hpta(d, h, save)
+        Altura.hpta(d, h, save)
+    end
+
+    # Função de calibração do Volume do Pinus caribaea hondurensis
     function vpch(d, h, v, save)
         Volume.vpch(d, h, v, save)
     end
     
+    # Função de calibração do Volume do Pinus caribaea hondurensis
+    function vpta(d, h, v, save)
+        Volume.vpta(d, h, v, save)
+    end
+
     # Define a função de inicialização do app
     function CalcPin()
 
         # Exporta as funções do Julia para o QML(JavaScript)
-        @qmlfunction singleFile saveFile
+        @qmlfunction singleFile saveFile hpma hpta vpch vpta 
 
         # Localiza o diretório padrão onde o pacote foi instalado
         current_directory = dirname(@__FILE__)
