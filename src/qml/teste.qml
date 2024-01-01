@@ -1,25 +1,54 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick.Controls.Basic
 
 ApplicationWindow {
+    width: 500
+    height: 500
     visible: true
-    width: 400
-    height: 300
-    title: "ComboBox Example"
+    font.pixelSize: 20
+    palette.windowText: "steelblue"
 
-    ComboBox {
-        id: comboBox1
-        editable: true
-        width: parent.width
-        model: ListModel{
-            id: model
-            ListElement { text: "Banana"}
-            ListElement { text: "Uva"}
-            ListElement { text: "Pera"}
+    // This will have a pixelSize of 20 and be "steelblue" in color.
+    header: Label {
+        text: "ApplicationWindow Label"
+        leftPadding: 20
+        topPadding: 20
+    }
+
+    Pane {
+        width: 400
+        height: 400
+        anchors.centerIn: parent
+        palette.window: "#edf3f8"
+        palette.windowText: "tomato"
+
+        // This will have a pixelSize of 20 and be "tomato" in color.
+        Label {
+            text: "Pane Label"
         }
-        onAccepted: {
-            if (find(editText) === -1)
-                model.append({text: editText})
+
+        Popup {
+            width: 300
+            height: 300
+            anchors.centerIn: parent
+            font.pixelSize: 10
+            visible: true
+
+            // This will have a pixelSize of 10 and "steelblue" in color.
+            Label {
+                text: "Popup Label"
+            }
+
+            Popup {
+                width: 200
+                height: 200
+                anchors.centerIn: parent
+                visible: true
+
+                // This will have a pixelSize of 20 and be "steelblue" in color.
+                Label {
+                    text: "Child Popup Label"
+                }
+            }
         }
     }
 }

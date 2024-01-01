@@ -3,22 +3,12 @@ module CalPin
 # Inclui os módulos auxiliares no projeto
 include(joinpath(@__DIR__, "src/Altura.jl"))
 include(joinpath(@__DIR__, "src/Volume.jl"))
-include(joinpath(@__DIR__, "src/Save.jl"))
-include(joinpath(@__DIR__, "src/ImportData.jl"))
+include(joinpath(@__DIR__, "src/Plot.jl"))
+
 
 import QML: QString, @qmlfunction, loadqml, exec
 
 export CalcPin
-    
-    # Função para seleção de arquivo em .CSV com dados para processamento
-    function singleFile(arg)
-        ImportData.singlefile(arg)
-    end
-
-    # Função salvar os resultados do processamento em .XLSX
-    function saveFile(Resultado, uri)
-        Save.saveFile(Resultado, uri)
-    end
 
     # Função de calibração da altura do Pinus maximinoi
     function hpma(d, h, save)
@@ -31,8 +21,8 @@ export CalcPin
     end
 
     # Função de calibração do Volume do Pinus caribaea hondurensis
-    function vpch(d, h, v, save)
-        Volume.vpch(d, h, v, save)
+    function vpch(dap, h, v, save)
+        Volume.vpch(dap, h, v, save)
     end
     
     # Função de calibração do Volume do Pinus caribaea hondurensis
@@ -40,17 +30,25 @@ export CalcPin
         Volume.vpta(d, h, v, save)
     end
 
+    function init_backend(width, height)
+        Plot.init_backend(width, height)
+    end
+
+    function plot_result(d, plt)
+        Plot.plot_result(d, plt)
+    end
+
     # Define a função de inicialização do app
     function CalcPin()
 
         # Exporta as funções do Julia para o QML(JavaScript)
-        @qmlfunction singleFile saveFile hpma hpta vpch vpta 
+        @qmlfunction hpma hpta vpch vpta plot_result init_backend 
 
         # Localiza o diretório padrão onde o pacote foi instalado
         current_directory = dirname(@__FILE__)
 
         # Carrega o arquivo .qml presente no diretório do pacote
-        loadqml(joinpath(current_directory, "src/qml", "vpch.qml"))
+        loadqml(joinpath(current_directory, "src/qml", "main.qml"))
 
         # Inicializa o arquivo .qml
         exec()
