@@ -8,49 +8,67 @@ import org.julialang
 ApplicationWindow {
     visible: true
     width: 640
-    height: 320
-    title: "Calibração da Altura do Pinus maximinoi"
+    height: 480
+    title: "Calibração do Volume do Pinus taeda"
 
-    Rectangle {
-        anchors.fill: parent
+    // Defina variáveis para armazenar os dados dos campos de texto
+    Image {
+        id: backgroundImage
+        source: "images/wallpaper.jpg" // Substitua pelo caminho real da sua imagem
+    }
 
-        // Defina variáveis para armazenar os dados dos campos de texto
+    Grid {
+        id: gridLayout
+        columns: 3
+        anchors.centerIn: parent
+        spacing: 10
 
-        Row {
-            anchors.horizontalCenter: parent.horizontalCenter // Centralizar na horizontal
-            y: 50
-            spacing: 10
-
-            // Primeira entrada de dados
+        // Adicione 21 campos de entrada (TextField)
+        Repeater {
+            model: 27
             TextField {
-                id: dap
-                placeholderText: qsTr("Dap (cm)")
+                placeholderText: (index % 3 === 0) ? "Dap (cm)" :
+                                (index % 3 === 1) ? "Altura (m)" :
+                                (index % 3 === 2) ? "Volume (m³)" : ""
                 horizontalAlignment: Text.AlignHCenter
-            }
-
-            // Segunda entrada de dados
-            TextField {
-                id: h
-                placeholderText: qsTr("Altura (m)")
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            // Terceira entrada de dados
-            TextField {
-                id: v
-                placeholderText: qsTr("Volume (m³)")
-                horizontalAlignment: Text.AlignHCenter
+                width: 120
+                height: 30
+                font.pixelSize: 14
+                background: Rectangle {
+                    color: "white"
+                    border.color: "darkgray"
+                    border.width: 1
+                    radius: 5
+                }
             }
         }
 
-        // Botão para processar os dados (opcional)
+        // Botão para processar os dados
         Button {
             text: "Processar Dados"
-            anchors.horizontalCenter: parent.horizontalCenter // Centralizar na horizontal
-            anchors.verticalCenter: parent.verticalCenter
+            Layout.rowSpan: 9 // Estende-se por 7 linhas
+            Layout.columnSpan: 3 // Estende-se por 3 colunas
             onClicked: {
-                // Aqui você pode adicionar a lógica para processar os dados inseridos
-                Julia.vpch(dap.text, h.text, v.text)
+                var columnVectors = [];
+
+                // Inicializa vetores para cada coluna
+                for (var i = 0; i < gridLayout.columns; i++) {
+                    columnVectors.push([]);
+                }
+
+                // Itera pelos filhos do GridLayout
+                for (var j = 0; j < gridLayout.children.length; j++) {
+                    // Adiciona os valores dos TextField aos vetores correspondentes
+                    if (gridLayout.children[j] instanceof TextField) {
+                        var columnIndex = j % gridLayout.columns;
+                        columnVectors[columnIndex].push(gridLayout.children[j].text);
+                    }
+                }
+
+                Julia.vpta(columnVectors[0])
+
+
+                // Substitua o console.log pela chamada à função Julia.vpch com os dados necessários
             }
         }
     }

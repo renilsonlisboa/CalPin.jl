@@ -7,9 +7,15 @@ import org.julialang
 
 ApplicationWindow {
     visible: true
-    width: 800
-    height: 600
+    width: 640
+    height: 480
     title: "Calibração do Volume do Pinus taeda"
+
+    // Defina variáveis para armazenar os dados dos campos de texto
+    Image {
+        id: backgroundImage
+        source: "images/wallpaper.jpg" // Substitua pelo caminho real da sua imagem
+    }
 
     Grid {
         id: gridLayout
@@ -21,8 +27,19 @@ ApplicationWindow {
         Repeater {
             model: 21
             TextField {
-                placeholderText: qsTr("Dado")
+                placeholderText: (index % 3 === 0) ? "Dap (cm)" :
+                                (index % 3 === 1) ? "Altura (m)" :
+                                (index % 3 === 2) ? "Volume (m³)" : ""
                 horizontalAlignment: Text.AlignHCenter
+                width: 120
+                height: 30
+                font.pixelSize: 14
+                background: Rectangle {
+                    color: "white"
+                    border.color: "darkgray"
+                    border.width: 1
+                    radius: 5
+                }
             }
         }
 
