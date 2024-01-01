@@ -5,7 +5,6 @@ include(joinpath(@__DIR__, "Altura.jl"))
 include(joinpath(@__DIR__, "Volume.jl"))
 include(joinpath(@__DIR__, "Plot.jl"))
 
-
 import QML: QString, @qmlfunction, loadqml, exec
 
 export CalcPin

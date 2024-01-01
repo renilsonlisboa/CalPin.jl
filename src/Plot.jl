@@ -1,7 +1,5 @@
 module Plot
 
-using QML, Plots
-
 export init_backend,  plot_result
 
     function init_backend(width::Float64, height::Float64)
