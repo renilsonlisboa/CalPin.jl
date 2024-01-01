@@ -7,6 +7,7 @@ import QtCore
 import org.julialang
 
 ApplicationWindow {
+    id: mainApp
     visible: true
     width: 640
     height: 320
@@ -14,7 +15,7 @@ ApplicationWindow {
 
     property string conclusionText: "" // Nova propriedade para armazenar o texto do resultado
     property var bfixo: [1.0, 2.0] // Nova propriedade para armazenar o texto do resultado
-    property var best: [1.0, 2.0] // Nova propriedade para armazenar o texto do resultado 
+    property var best: [1.0, 2.0] // Nova propriedade para armazenar o texto do resultado
 
     Rectangle {
         anchors.fill: parent
@@ -120,14 +121,20 @@ ApplicationWindow {
             fileMode: FileDialog.SaveFile
             currentFolder: standardLocations(StandardPaths.HomeLocation)[0]
             onAccepted: {
-                var resultado = Julia.vpch(dap.text, h.text, v.text, saveDialog.selectedFile)
+                if (!dap.text || dap.text.trim() === "") {
+                    emptyDialog.open();
+                } else {
 
-                bfixo = resultado[0]
-                best = resultado[1]
+                    var resultado = Julia.vpch(dap.text, h.text, v.text, saveDialog.selectedFile)
+                    
+                    bfixo = resultado[0]
+                    best = resultado[1]
 
-                root.do_plot(resultado[2]);
+                    mainApp.title = "Gráfico do Ajuste"
+                    root.do_plot(resultado[2])
 
-                conclusionDialog.open();
+                    conclusionDialog.open();
+                }
             }
             Component.onCompleted: visible = false
         }
