@@ -120,19 +120,14 @@ ApplicationWindow {
             fileMode: FileDialog.SaveFile
             currentFolder: standardLocations(StandardPaths.HomeLocation)[0]
             onAccepted: {
-                if (!dap.text || dap.text.trim() === "") {
-                    emptyDialog.open();
-                } else {
+                var resultado = Julia.vpch(dap.text, h.text, v.text, saveDialog.selectedFile)
 
-                    var resultado = Julia.vpch(dap.text, h.text, v.text, saveDialog.selectedFile)
-                    
-                    bfixo = resultado[0]
-                    best = resultado[1]
+                bfixo = resultado[0]
+                best = resultado[1]
 
-                    root.do_plot(resultado[2]);
+                root.do_plot(resultado[2]);
 
-                    conclusionDialog.open();
-                }
+                conclusionDialog.open();
             }
             Component.onCompleted: visible = false
         }
