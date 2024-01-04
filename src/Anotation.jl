@@ -16,16 +16,17 @@
 
 ####### Tela Inicial ############
 
+#-> Definir "Selecione a variável a ser calibrada"
+#-> Definir "Selecione a espécie a ser calibrada"
 #-> Centralizar Valor Inicial do combobox
-#-> Melhorar visual do botão de Iniciar Processamento
+#-> Definir italico para os valores selecionados no combobox
+#-> Melhorar visual do botão de Iniciar calibração
 #-> Definir um icone para a janela do APP
 
-####### AAS ############
+########### VPCH  ###############
 
-#-> Programar o botão VIEW para apresentar o DataFrame que foi importado
-#-> Ajustar o botão de aviso quando não foi informado algum dos valores (front + back (qml + julia))
-#-> Inserir uma barra de carregamento abaixo do botão processar que acomapnhe o tempo para processar e concluir o processamento
-#-> Apresentar uma janela com os resultados básicos do inventário 
-#-> Inserir uma barra de carregamento ao lado do botão de importar dados ou então alterar a cor do botão se importado com sucesso
-#-> No aviso de saida apresentar o caminho onde foi salvo o arquivo de saida
-#-> Corrigir WARNINGS do QML (Estão funcionando mas gerando avisos)
+#-> Finalizar testes
+
+########### VPTA  ###############
+
+#-> Finalizar testes

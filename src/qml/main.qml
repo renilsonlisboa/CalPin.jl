@@ -80,13 +80,29 @@ ApplicationWindow {
                 ListElement { text: "Pinus taeda" }
             }
 
+            // Usar um ItemDelegate personalizado para centralizar o texto
+            delegate: ItemDelegate {
+                width: comboBox.width
+                height: comboBox.height
+
+                contentItem: Text {
+                    text: model.text
+                    anchors.centerIn: parent
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+
+                    // Adicionar itálico para "Pinus taeda"
+                    font.italic: true
+                }
+            }
+
             Component.onCompleted: {
                 updateComboBox2();
             }
         }
 
         Button {
-            text: qsTr("Iniciar Processamento")
+            text: qsTr("Iniciar Calibração")
             anchors.centerIn: parent
             anchors.verticalCenterOffset: 150
             onClicked: {
