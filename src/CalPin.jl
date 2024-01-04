@@ -10,13 +10,13 @@ import QML: QString, @qmlfunction, loadqml, exec
 export CalcPin
 
     # Função de calibração da altura do Pinus maximinoi
-    function hpma(d, h, save)
-        Altura.hpma(d, h, save)
+    function hpma(dados, save)
+        Altura.hpma(dados, save)
     end
         
     # Função de calibração do altura do Pinus taeda
-    function hpta(d, h, save)
-        Altura.hpta(d, h, save)
+    function hpta(dados, save)
+        Altura.hpta(dados, save)
     end
 
     # Função de calibração do Volume do Pinus caribaea hondurensis
@@ -25,8 +25,8 @@ export CalcPin
     end
     
     # Função de calibração do Volume do Pinus caribaea hondurensis
-    function vpta(d, h, v, save)
-        Volume.vpta(d, h, v, save)
+    function vpta(dados, save)
+        Volume.vpta(dados, save)
     end
 
     function init_backend(width, height)

@@ -26,7 +26,9 @@
 ########### VPCH  ###############
 
 #-> Finalizar testes
+#-> Remover entrada de STRING nos Inputs
 
 ########### VPTA  ###############
 
 #-> Finalizar testes
+#-> Remover entrada de STRING nos Inputs

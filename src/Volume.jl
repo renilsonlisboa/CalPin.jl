@@ -49,12 +49,14 @@ export vpch, vpta
 
     end
 
-    function vpta(dap, h, v, save)
+    function vpta(dados, save)
 
-        dap = Vector{Float64}(Meta.parse.(dap))
-        h = Vector{Float64}(Meta.parse.(h))
-        v = Vector{Float64}(Meta.parse.(v))
+        dados = convert.(Vector{String}, dados)
 
+        dap = Meta.parse.(dados[1])
+        h = Meta.parse.(dados[2])
+        v = Meta.parse.(dados[3])
+        
         if save !== nothing
             save_s = QString(save)
         else
@@ -79,11 +81,14 @@ export vpch, vpta
         x0= 5:0.001:45
         xGrid = [ones(size(x0,1)) x0]
         xGridt = [ones(size(x0,1)) log.(x0)]
-        yestimado = xGridt*Bhat
-     
-        scatter(dap, h, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Altura (m)", grid_linewidth = 0, color = "green")
-        plot!(xGrid[:,2], yestimado, legend = false, color = "blue")
+        yestimado = xGridt.*Bhat
+        println(yestimado)
+
+        plt = scatter(xGrid[:,2], yestimado, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Altura (m)", grid_linewidth = 0, color = "green")
+        
         savefig("$(cleaned_path).png")
+
+        return [Bfixo, Bhat]
 
     end
 

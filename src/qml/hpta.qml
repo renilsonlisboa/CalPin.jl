@@ -1,8 +1,9 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts
 import QtQuick.Dialogs
-import Qt.labs.platform
+import QtQuick.Window
+import QtQuick.Layouts
+import QtCore
 import org.julialang
 
 ApplicationWindow {
@@ -10,6 +11,10 @@ ApplicationWindow {
     width: 640
     height: 480
     title: "Calibração do Volume do Pinus taeda"
+
+    property string conclusionText: "" // Nova propriedade para armazenar o texto do resultado
+    property var bfixo: [1.0, 2.0] // Nova propriedade para armazenar o texto do resultado
+    property var best: [1.0, 2.0] // Nova propriedade para armazenar o texto do resultado
 
     // Defina variáveis para armazenar os dados dos campos de texto
     Image {
@@ -19,17 +24,16 @@ ApplicationWindow {
 
     Grid {
         id: gridLayout
-        columns: 3
+        columns: 2
         anchors.centerIn: parent
         spacing: 10
 
         // Adicione 21 campos de entrada (TextField)
         Repeater {
-            model: 27
+            model: 18
             TextField {
-                placeholderText: (index % 3 === 0) ? "Dap (cm)" :
-                                (index % 3 === 1) ? "Altura (m)" :
-                                (index % 3 === 2) ? "Volume (m³)" : ""
+                placeholderText: (index % 2 === 0) ? "Dap (cm)" :
+                                 (index % 2 === 1) ? "Altura (m)" : ""
                 horizontalAlignment: Text.AlignHCenter
                 width: 120
                 height: 30
@@ -43,12 +47,33 @@ ApplicationWindow {
             }
         }
 
+        FileDialog {
+            id: saveDialog
+            title: "Selecione o arquivo no formato .CSV com os dados a serem processados"
+            fileMode: FileDialog.SaveFile
+            currentFolder: standardLocations(StandardPaths.HomeLocation)[0]
+            Component.onCompleted: visible = false
+        }
+        MessageDialog {
+            id: conclusionDialog
+            title: "Calibração Concluida com Sucesso"
+            buttons: MessageDialog.Ok
+            text: " Os valores de bfixo são: β0 = " + bfixo[0] + " β1 = " + bfixo[1] + "\nOs valores de estimado são: β0 = " + best[0] + " β1 = " + best[1]
+        }
+        MessageDialog {
+            id: emptyDialog
+            title: "Dados insuficientes para Calibração"
+            buttons: MessageDialog.Ok
+        }
+
         // Botão para processar os dados
         Button {
-            text: "Processar Dados"
+            id: calibra
+            text: "Calibrar Dados"
             Layout.rowSpan: 9 // Estende-se por 7 linhas
-            Layout.columnSpan: 3 // Estende-se por 3 colunas
+            Layout.columnSpan: 2// Estende-se por 3 colunas
             onClicked: {
+
                 var columnVectors = [];
 
                 // Inicializa vetores para cada coluna
@@ -65,10 +90,10 @@ ApplicationWindow {
                     }
                 }
 
-                Julia.vpta(columnVectors[0])
+                saveDialog.open();
 
+                Julia.hpta(columnVectors, saveDialog.selectedFile)
 
-                // Substitua o console.log pela chamada à função Julia.vpch com os dados necessários
             }
         }
     }
