@@ -46,15 +46,25 @@ export hpta, hpma
 
     end
 
-    function hpma(dap, h, save)
+    function hpma(dados, save)
 
-        dap = Vector{Float64}(Meta.parse.(dap))
-        h = Vector{Float64}(Meta.parse.(h))
+        dados = convert.(Vector{String}, dados)
 
-        Bfixo=[-9.9265; 1.8984; 1.0016] 
-        D=[0.02525 0.002004 -0.01322; 0.002004 0.003499 -0.00429; -0.01322 -0.00429 0.01009]
+        dap = Meta.parse.(dados[1])
+        h = Meta.parse.(dados[2])
         
-        R =[0.007781]        
+        if save !== nothing
+            save_s = QString(save)
+        else
+            return 0
+        end
+
+        # Remover o prefixo "file:///"
+        cleaned_path = replace(save_s, "file:///" => "")
+
+        Bfixo=[-2.4286; 5.8784]
+        D=[4.3734 1.2910; 1.2910 0.6303]
+        R =[4.6233]     
         n=size(dap,1)        
         R=diagm(repeat(R, inner = n))        
         Z= [log.(dap)]        

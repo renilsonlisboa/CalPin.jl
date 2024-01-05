@@ -1,7 +1,9 @@
 module Volume
 
 # Importa os pacotes 
-using QML, Plots, LinearAlgebra
+import QML: QString
+import Plots: plot, scatter!
+import LinearAlgebra: diagm
 
 ##### Exporta as funções do módulo
 export vpch, vpta
@@ -82,9 +84,9 @@ export vpch, vpta
         xGrid = [ones(size(x0,1)) x0]
         xGridt = [ones(size(x0,1)) log.(x0)]
         yestimado = xGridt.*Bhat
-        println(yestimado)
 
-        plt = scatter(xGrid[:,2], yestimado, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Altura (m)", grid_linewidth = 0, color = "green")
+        plt = scatter(xGrid[:,2], yestimado, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Altura (m)", grid_linewidth = 0, color = "green", legend = false)
+        plt = plot!(dap, h)
         
         savefig("$(cleaned_path).png")
 

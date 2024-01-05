@@ -30,7 +30,7 @@ ApplicationWindow {
 
         // Adicione 21 campos de entrada (TextField)
         Repeater {
-            model: 18
+            model: 6
             TextField {
                 placeholderText: (index % 2 === 0) ? "Dap (cm)" :
                                  (index % 2 === 1) ? "Altura (m)" : ""
@@ -68,7 +68,13 @@ ApplicationWindow {
                         columnVectors[columnIndex].push(gridLayout.children[j].text);
                     }
                 }
-                Julia.hpta(columnVectors, saveDialog.selectedFile)
+
+                var resultado = Julia.hpta(columnVectors, saveDialog.selectedFile)
+
+                bfixo = resultado[0]
+                best = resultado[1]
+
+                conclusionDialog.open();
             }
             Component.onCompleted: visible = false
         }
@@ -88,7 +94,7 @@ ApplicationWindow {
         Button {
             id: calibra
             text: "Calibrar Dados"
-            Layout.rowSpan: 9 // Estende-se por 7 linhas
+            Layout.rowSpan: 3 // Estende-se por 7 linhas
             Layout.columnSpan: 2// Estende-se por 3 colunas
             onClicked: {
                 saveDialog.open()
