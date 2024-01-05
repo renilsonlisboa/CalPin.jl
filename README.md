@@ -12,14 +12,14 @@ O pacote **CalPin** é uma ferramenta em Julia para realizar cálculos relaciona
 ### Altura
 Para calcular a altura, você pode utilizar as seguintes opções:
 
-- Espécie X
-- Espécie Y
+- Pinus maximinoi
+- Pinus taeda
 
 ### Volume
 Para calcular o volume, as opções disponíveis são:
 
-- Espécie Y
-- Espécie Z
+- Pinus caribaea hondurensis
+- Pinus taeda
 
 ## Instalação
 
@@ -28,3 +28,11 @@ Para começar a usar o pacote CalPin, primeiro, você precisa instalá-lo. Abra 
 ```julia
 using Pkg
 Pkg.add("CalPin")
+```
+
+## Inicio
+
+Para começar a usar o pacote CalPin, primeiro, você precisa instalá-lo. Abra o REPL do Julia e execute o seguinte comando:
+
+```julia
+CalPin()
