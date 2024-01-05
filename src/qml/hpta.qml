@@ -7,6 +7,7 @@ import QtCore
 import org.julialang
 
 ApplicationWindow {
+    id: mainApp
     visible: true
     width: 640
     height: 480
@@ -83,6 +84,7 @@ ApplicationWindow {
             title: "Calibração Concluida com Sucesso"
             buttons: MessageDialog.Ok
             text: " Os valores de bfixo são: β0 = " + bfixo[0] + " β1 = " + bfixo[1] + "\nOs valores de estimado são: β0 = " + best[0] + " β1 = " + best[1]
+            // Ajuste dinamicamente a largura e a altura com base no comprimento do texto
         }
         MessageDialog {
             id: emptyDialog

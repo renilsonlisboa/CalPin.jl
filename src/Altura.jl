@@ -1,6 +1,9 @@
 module Altura
 
-using QML, Plots, LinearAlgebra
+# Importa os pacotes 
+import QML: QString
+import Plots: plot, scatter!, savefig
+import LinearAlgebra: diagm
 
 export hpta, hpma
 

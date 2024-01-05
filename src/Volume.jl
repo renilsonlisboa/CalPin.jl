@@ -2,7 +2,7 @@ module Volume
 
 # Importa os pacotes 
 import QML: QString
-import Plots: plot, scatter!
+import Plots: plot, scatter!, savefig
 import LinearAlgebra: diagm
 
 ##### Exporta as funções do módulo
@@ -90,7 +90,7 @@ export vpch, vpta
         
         savefig("$(cleaned_path).png")
 
-        return [Bfixo, Bhat]
+        return [Bfixo, Bhat, plt]
 
     end
 

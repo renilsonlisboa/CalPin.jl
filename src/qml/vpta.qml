@@ -60,6 +60,11 @@ ApplicationWindow {
             title: "Calibração Concluida com Sucesso"
             buttons: MessageDialog.Ok
             text: " Os valores de bfixo são: β0 = " + bfixo[0] + " β1 = " + bfixo[1] + "\nOs valores de estimado são: β0 = " + best[0] + " β1 = " + best[1]
+            Component.onCompleted: {
+                // Ajuste a largura e a altura conforme necessário, por exemplo, multiplicando por um fator
+                width = text.length * 10;
+                height = text.length * 5;
+            }
         }
         MessageDialog {
             id: emptyDialog
