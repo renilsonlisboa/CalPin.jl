@@ -10,7 +10,7 @@ ApplicationWindow {
     visible: true
     width: 640
     height: 480
-    title: "Calibração do Volume do Pinus taeda"
+    title: "Calibração da Altura do Pinus taeda"
 
     property string conclusionText: "" // Nova propriedade para armazenar o texto do resultado
     property var bfixo: [1.0, 2.0] // Nova propriedade para armazenar o texto do resultado
@@ -52,6 +52,24 @@ ApplicationWindow {
             title: "Selecione o arquivo no formato .CSV com os dados a serem processados"
             fileMode: FileDialog.SaveFile
             currentFolder: standardLocations(StandardPaths.HomeLocation)[0]
+            onAccepted: {
+                var columnVectors = [];
+
+                // Inicializa vetores para cada coluna
+                for (var i = 0; i < gridLayout.columns; i++) {
+                    columnVectors.push([]);
+                }
+
+                // Itera pelos filhos do GridLayout
+                for (var j = 0; j < gridLayout.children.length; j++) {
+                    // Adiciona os valores dos TextField aos vetores correspondentes
+                    if (gridLayout.children[j] instanceof TextField) {
+                        var columnIndex = j % gridLayout.columns;
+                        columnVectors[columnIndex].push(gridLayout.children[j].text);
+                    }
+                }
+                Julia.hpta(columnVectors, saveDialog.selectedFile)
+            }
             Component.onCompleted: visible = false
         }
         MessageDialog {
@@ -73,27 +91,7 @@ ApplicationWindow {
             Layout.rowSpan: 9 // Estende-se por 7 linhas
             Layout.columnSpan: 2// Estende-se por 3 colunas
             onClicked: {
-
-                var columnVectors = [];
-
-                // Inicializa vetores para cada coluna
-                for (var i = 0; i < gridLayout.columns; i++) {
-                    columnVectors.push([]);
-                }
-
-                // Itera pelos filhos do GridLayout
-                for (var j = 0; j < gridLayout.children.length; j++) {
-                    // Adiciona os valores dos TextField aos vetores correspondentes
-                    if (gridLayout.children[j] instanceof TextField) {
-                        var columnIndex = j % gridLayout.columns;
-                        columnVectors[columnIndex].push(gridLayout.children[j].text);
-                    }
-                }
-
-                saveDialog.open();
-
-                Julia.hpta(columnVectors, saveDialog.selectedFile)
-
+                saveDialog.open()
             }
         }
     }

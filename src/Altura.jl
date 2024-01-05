@@ -26,20 +26,20 @@ export hpta, hpma
         R =[4.6233]
         n=size(dap,1)
         R=diagm(repeat(R, inner = n))
-        Z= [log.(dap) log.(h)]
+        Z= log.(dap)
         Z=[ones(n) Z]
         yhat = Z*Bfixo
-        RES= v.-yhat
+        RES= h.-yhat
         b=D*Z'*inv(Z*D*Z'+R)*RES
         Bhat=Bfixo+b
         x0= 5:0.001:45
         xGrid = [ones(size(x0,1)) x0]
         xGridt = [ones(size(x0,1)) log.(x0)]
-        yestimado = xGridt.*Bhat
-        println(yestimado)
+        yestimado = xGridt*Bhat
 
         plt = scatter(dap, h, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Altura (m)", grid_linewidth = 0, color = "green")
         
+
         savefig("$(cleaned_path).png")
 
         return [Bfixo, Bhat]
