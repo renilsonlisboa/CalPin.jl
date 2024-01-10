@@ -6,8 +6,8 @@ import Qt.labs.platform
 
 ApplicationWindow {
     visible: true
-    width: 640
-    height: 480
+    width: 480
+    height: 320
     title: "CalPin"
     maximumHeight: height
     maximumWidth: width
@@ -27,18 +27,21 @@ ApplicationWindow {
         ComboBox {
             id: comboBox
             anchors.centerIn: parent
-            width: 480
-            anchors.verticalCenterOffset: -75
+            width: 240
+            anchors.verticalCenterOffset: -50
             height: 30
             currentIndex: 0
 
+            // Utilizando contentItem para personalizar o texto
+            contentItem: Text {
+                text: comboBox.currentText
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
             model: ListModel {
-                ListElement {
-                    text: "Altura"
-                }
-                ListElement {
-                    text: "Volume"
-                }
+                ListElement {text: "Altura"}
+                ListElement {text: "Volume"}
             }
 
             // Usar um ItemDelegate personalizado para centralizar o texto
@@ -51,6 +54,8 @@ ApplicationWindow {
                     anchors.centerIn: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    padding: 10
+                    font.bold: true
                 }
             }
 
@@ -63,8 +68,8 @@ ApplicationWindow {
         ComboBox {
             id: comboBox2
             anchors.centerIn: parent
-            width: 480
-            anchors.verticalCenterOffset: 25
+            width: 240
+            anchors.verticalCenterOffset: 0
             height: 30
             currentIndex: 0
 
@@ -80,6 +85,13 @@ ApplicationWindow {
                 ListElement { text: "Pinus taeda" }
             }
 
+            contentItem: Text {
+                text: comboBox2.currentText
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.italic: true
+            }
+
             // Usar um ItemDelegate personalizado para centralizar o texto
             delegate: ItemDelegate {
                 width: comboBox.width
@@ -90,6 +102,8 @@ ApplicationWindow {
                     anchors.centerIn: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    padding: 10
+                    font.bold: true
 
                     // Adicionar itálico para "Pinus taeda"
                     font.italic: true
@@ -103,8 +117,11 @@ ApplicationWindow {
 
         Button {
             text: qsTr("Iniciar Calibração")
+            padding: 10
+            font.bold: true
+            font.pixelSize: 16
             anchors.centerIn: parent
-            anchors.verticalCenterOffset: 150
+            anchors.verticalCenterOffset: 100
             onClicked: {
                 if (comboBox.currentIndex === 0
                         && comboBox2.currentIndex === 0) {

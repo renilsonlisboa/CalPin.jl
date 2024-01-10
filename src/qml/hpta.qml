@@ -39,12 +39,6 @@ ApplicationWindow {
                 width: 120
                 height: 30
                 font.pixelSize: 14
-                background: Rectangle {
-                    color: "white"
-                    border.color: "darkgray"
-                    border.width: 1
-                    radius: 5
-                }
             }
         }
 
@@ -70,12 +64,17 @@ ApplicationWindow {
                     }
                 }
 
-                var resultado = Julia.hpta(columnVectors, saveDialog.selectedFile)
+                if (columnVectors === "") {
+                    emptyDialog.open();
+                } else {
 
-                bfixo = resultado[0]
-                best = resultado[1]
+                    var resultado = Julia.hpta(columnVectors, saveDialog.selectedFile)
 
-                conclusionDialog.open();
+                    bfixo = resultado[0]
+                    best = resultado[1]
+
+                    conclusionDialog.open();
+                }
             }
             Component.onCompleted: visible = false
         }
@@ -84,7 +83,6 @@ ApplicationWindow {
             title: "Calibração Concluida com Sucesso"
             buttons: MessageDialog.Ok
             text: " Os valores de bfixo são: β0 = " + bfixo[0] + " β1 = " + bfixo[1] + "\nOs valores de estimado são: β0 = " + best[0] + " β1 = " + best[1]
-            // Ajuste dinamicamente a largura e a altura com base no comprimento do texto
         }
         MessageDialog {
             id: emptyDialog
@@ -101,6 +99,35 @@ ApplicationWindow {
             onClicked: {
                 saveDialog.open()
             }
+        }
+    }
+
+    ColumnLayout {
+    id: root
+    spacing: 6
+    anchors.fill: parent
+
+        function do_plot(def_graph) {
+            if(jdisp === null)
+            return;
+
+            Julia.plot_result(jdisp, def_graph);
+        }
+
+        function init_and_plot(def_graph) {
+            if(jdisp === null)
+                return;
+
+            Julia.init_backend(jdisp.width, jdisp.height);
+            do_plot(def_graph);
+        }
+
+        JuliaDisplay {
+            id: jdisp
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            onHeightChanged: root.init_and_plot()
+            onWidthChanged: root.init_and_plot()
         }
     }
 }

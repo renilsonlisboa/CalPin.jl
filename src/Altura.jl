@@ -2,7 +2,7 @@ module Altura
 
 # Importa os pacotes 
 import QML: QString
-import Plots: plot, scatter!, savefig
+import Plots: plot!, scatter, savefig
 import LinearAlgebra: diagm
 
 export hpta, hpma
@@ -45,7 +45,9 @@ export hpta, hpma
 
         savefig("$(cleaned_path).png")
 
-        return [Bfixo, Bhat]
+        display(plt)
+
+        return [Bfixo, Bhat, plt]
 
     end
 
