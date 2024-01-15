@@ -119,7 +119,7 @@ ApplicationWindow {
             text: qsTr("Iniciar Calibração")
             padding: 10
             font.bold: true
-            font.pixelSize: 16
+            font.pixelSize: 14
             anchors.centerIn: parent
             anchors.verticalCenterOffset: 100
             onClicked: {

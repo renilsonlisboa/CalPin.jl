@@ -34,20 +34,20 @@ export hpta, hpma
         yhat = Z*Bfixo
         RES= h.-yhat
         b=D*Z'*inv(Z*D*Z'+R)*RES
-        Bhat=Bfixo+b
+        Bhat= round.(Bfixo+b, digits = 7)
         x0= 5:0.001:45
         xGrid = [ones(size(x0,1)) x0]
         xGridt = [ones(size(x0,1)) log.(x0)]
         yestimado = xGridt*Bhat
 
         plt = scatter(dap, h, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Altura (m)", grid_linewidth = 0, color = "green")
-        
+        plt = plot!(xGrid[:,2], yestimado, legend = false, color = "blue")
 
         savefig("$(cleaned_path).png")
 
         display(plt)
 
-        return [Bfixo, Bhat, plt]
+        return [Bfixo, Bhat]
 
     end
 
@@ -86,8 +86,11 @@ export hpta, hpma
         scatter(dap, h, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Altura (m)", grid_linewidth = 0, color = "green")
         plot!(xGrid[:,2], yestimado, legend = false, color = "blue")
         
-        savefig("$(save).png")
-        
+        savefig("$(cleaned_path).png")
+
+        display(plt)
+
+        return [Bfixo, Bhat]
     end
 
 end
