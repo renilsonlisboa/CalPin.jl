@@ -30,7 +30,7 @@ ApplicationWindow {
 
         // Adicione 21 campos de entrada (TextField)
         Repeater {
-            model: 6
+            model: 18
             TextField {
                 placeholderText: (index % 2 === 0) ? "Dap (cm)" :
                                  (index % 2 === 1) ? "Altura (m)" : ""
@@ -63,7 +63,7 @@ ApplicationWindow {
                     }
                 }
 
-                if (columnVectors === "") {
+                if (columnVectors.length < 18) {
                     emptyDialog.open();
                 } else {
 
@@ -86,18 +86,24 @@ ApplicationWindow {
         MessageDialog {
             id: emptyDialog
             title: "Dados insuficientes para Calibração"
+            text: "Os dados informados são insuficientes para a calibração.\nPreencha todos os campos e tente novamente."
             buttons: MessageDialog.Ok
         }
-
-        // Botão para processar os dados
-        Button {
-            id: calibra
-            text: "Calibrar Dados"
-            Layout.rowSpan: 3 // Estende-se por 7 linhas
-            Layout.columnSpan: 2// Estende-se por 3 colunas
-            onClicked: {
-                saveDialog.open()
-            }
+    }
+    // Botão para processar os dados
+    Button {
+        id: calibra
+        text: "Calibrar Dados"
+        padding: 10
+        width: 250
+        anchors.centerIn: gridLayout
+        anchors.verticalCenterOffset: 200
+        font.bold: true
+        font.pixelSize: 12
+        Layout.rowSpan: 9 // Estende-se por 9 linhas
+        Layout.columnSpan: 2// Estende-se por 2 colunas
+        onClicked: {
+            saveDialog.open()
         }
     }
 }

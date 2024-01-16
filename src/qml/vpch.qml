@@ -121,20 +121,12 @@ ApplicationWindow {
             fileMode: FileDialog.SaveFile
             currentFolder: standardLocations(StandardPaths.HomeLocation)[0]
             onAccepted: {
-                if (!dap.text || dap.text.trim() === "") {
-                    emptyDialog.open();
-                } else {
+                var resultado = Julia.vpch(dap.text, h.text, v.text, saveDialog.selectedFile)
 
-                    var resultado = Julia.vpch(dap.text, h.text, v.text, saveDialog.selectedFile)
-                    
-                    bfixo = resultado[0]
-                    best = resultado[1]
+                bfixo = resultado[0]
+                best = resultado[1]
 
-                    mainApp.title = "Gráfico do Ajuste"
-                    root.do_plot(resultado[2])
-
-                    conclusionDialog.open();
-                }
+                conclusionDialog.open();
             }
             Component.onCompleted: visible = false
         }
@@ -142,40 +134,12 @@ ApplicationWindow {
             id: conclusionDialog
             title: "Calibração Concluida com Sucesso"
             buttons: MessageDialog.Ok
-            text: " Os valores de bfixo são: β0 = " + bfixo[0] + " β1 = " + bfixo[1] + "\nOs valores de estimado são: β0 = " + best[0] + " β1 = " + best[1]
+            text: " Coeficientes estimados, parte aleatória \nβ0 = " + bfixo[0] + "\nβ1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = " + best[0] + "\nβ1 = " + best[1]
         }
         MessageDialog {
             id: emptyDialog
             title: "Dados insuficientes para Calibração"
             buttons: MessageDialog.Ok
-        }
-    }
-    ColumnLayout {
-    id: root
-    spacing: 6
-    anchors.fill: parent
-
-        function do_plot(def_graph) {
-            if(jdisp === null)
-            return;
-
-            Julia.plot_result(jdisp, def_graph);
-        }
-
-        function init_and_plot(def_graph) {
-            if(jdisp === null)
-                return;
-
-            Julia.init_backend(jdisp.width, jdisp.height);
-            do_plot(def_graph);
-        }
-
-        JuliaDisplay {
-        id: jdisp
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        onHeightChanged: root.init_and_plot()
-        onWidthChanged: root.init_and_plot()
         }
     }
 }

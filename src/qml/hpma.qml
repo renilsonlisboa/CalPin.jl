@@ -10,7 +10,7 @@ ApplicationWindow {
     visible: true
     width: 640
     height: 480
-    title: "Calibração da Altura do Pinus taeda"
+    title: "Calibração da Altura do Pinus maximinoi"
 
     property string conclusionText: "" // Nova propriedade para armazenar o texto do resultado
     property var bfixo: [1.0, 2.0] // Nova propriedade para armazenar o texto do resultado
@@ -38,20 +38,13 @@ ApplicationWindow {
                 width: 120
                 height: 30
                 font.pixelSize: 14
-                background: Rectangle {
-                    color: "white"
-                    border.color: "darkgray"
-                    border.width: 1
-                    radius: 5
-                }
             }
         }
 
         FileDialog {
             id: saveDialog
-            title: "Selecione o arquivo no formato .CSV com os dados a serem processados"
+            title: "Selecione o local para salvar os resultados"
             fileMode: FileDialog.SaveFile
-            currentFolder: standardLocations(StandardPaths.HomeLocation)[0]
             onAccepted: {
                 var columnVectors = [];
 
@@ -68,7 +61,19 @@ ApplicationWindow {
                         columnVectors[columnIndex].push(gridLayout.children[j].text);
                     }
                 }
-                Julia.hpta(columnVectors, saveDialog.selectedFile)
+
+                if (columnVectors.length < 9) {
+                    console.log(size(columnVectors));
+                    emptyDialog.open();
+                } else {
+
+                    var resultado = Julia.hpta(columnVectors, saveDialog.selectedFile)
+
+                    bfixo = resultado[0]
+                    best = resultado[1]
+
+                    conclusionDialog.open();
+                }
             }
             Component.onCompleted: visible = false
         }
@@ -76,23 +81,29 @@ ApplicationWindow {
             id: conclusionDialog
             title: "Calibração Concluida com Sucesso"
             buttons: MessageDialog.Ok
-            text: " Os valores de bfixo são: β0 = " + bfixo[0] + " β1 = " + bfixo[1] + "\nOs valores de estimado são: β0 = " + best[0] + " β1 = " + best[1]
+            text: " Coeficientes estimados, parte aleatória \nβ0 = " + bfixo[0] + "\nβ1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = " + best[0] + "\nβ1 = " + best[1]
         }
         MessageDialog {
             id: emptyDialog
             title: "Dados insuficientes para Calibração"
+            text: "Os dados informados são insuficientes para a calibração.\nPreencha todos os campos e tente novamente."
             buttons: MessageDialog.Ok
         }
-
-        // Botão para processar os dados
-        Button {
-            id: calibra
-            text: "Calibrar Dados"
-            Layout.rowSpan: 9 // Estende-se por 7 linhas
-            Layout.columnSpan: 2// Estende-se por 3 colunas
-            onClicked: {
-                saveDialog.open()
-            }
+    }
+    // Botão para processar os dados
+    Button {
+        id: calibra
+        text: "Calibrar Dados"
+        padding: 10
+        width: 250
+        anchors.centerIn: gridLayout
+        anchors.verticalCenterOffset: 200
+        font.bold: true
+        font.pixelSize: 12
+        Layout.rowSpan: 9 // Estende-se por 9 linhas
+        Layout.columnSpan: 2// Estende-se por 2 colunas
+        onClicked: {
+            saveDialog.open()
         }
     }
 }

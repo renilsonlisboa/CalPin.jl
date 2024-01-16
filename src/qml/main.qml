@@ -37,6 +37,7 @@ ApplicationWindow {
                 text: comboBox.currentText
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                font.bold: true
             }
 
             model: ListModel {
@@ -90,6 +91,7 @@ ApplicationWindow {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.italic: true
+                font.bold: true
             }
 
             // Usar um ItemDelegate personalizado para centralizar o texto
@@ -119,7 +121,7 @@ ApplicationWindow {
             text: qsTr("Iniciar Calibração")
             padding: 10
             font.bold: true
-            font.pixelSize: 14
+            font.pixelSize: 12
             anchors.centerIn: parent
             anchors.verticalCenterOffset: 100
             onClicked: {
