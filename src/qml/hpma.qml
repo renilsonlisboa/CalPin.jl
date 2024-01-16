@@ -43,7 +43,7 @@ ApplicationWindow {
 
         FileDialog {
             id: saveDialog
-            title: "Selecione o local para salvar os resultados"
+            title: "Selecione o local para salvar o arquivo..."
             fileMode: FileDialog.SaveFile
             onAccepted: {
                 var columnVectors = [];
@@ -62,18 +62,12 @@ ApplicationWindow {
                     }
                 }
 
-                if (columnVectors.length < 9) {
-                    console.log(size(columnVectors));
-                    emptyDialog.open();
-                } else {
+                var resultado = Julia.hpta(columnVectors, saveDialog.selectedFile)
 
-                    var resultado = Julia.hpta(columnVectors, saveDialog.selectedFile)
+                bfixo = resultado[0]
+                best = resultado[1]
 
-                    bfixo = resultado[0]
-                    best = resultado[1]
-
-                    conclusionDialog.open();
-                }
+                conclusionDialog.open();
             }
             Component.onCompleted: visible = false
         }
