@@ -1,4 +1,4 @@
-module CalcPin
+module CalPin
 
 # Inclui os módulos auxiliares no projeto
 include(joinpath(@__DIR__, "Altura.jl"))
