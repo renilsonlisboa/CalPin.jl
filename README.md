@@ -27,7 +27,7 @@ Para começar a usar o pacote CalPin, primeiro, você precisa instalá-lo. Abra 
 
 ```julia
 using Pkg
-Pkg.add("CalPin")
+Pkg.add(url="https://github.com/renilsonlisboa/CalPin.jl")
 ```
 
 ## Inicio
