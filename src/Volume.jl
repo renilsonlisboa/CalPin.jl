@@ -2,7 +2,7 @@ module Volume
 
 # Importa os pacotes 
 import QML: QString
-import Plots: plot, scatter!, savefig
+import Plots: plot!, scatter, savefig
 import LinearAlgebra: diagm
 import DataFrames: DataFrame
 
@@ -47,8 +47,8 @@ export vpch, vpta
         yestimado = exp.(yestimado)
 
         # Gera o gráfico do ajusto
-        plt = plot(orderData.x1, yestimado, legend = false, color = "blue", show = false)
-        plt = scatter!([x = dap for x in 1:3], [y = v for y in 1:3], show = false)
+        plt = scatter([x = dap for x in 1:3], [y = v for y in 1:3], xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Volume (m³)", grid_linewidth = 0, color = "green")
+        plt = plot!(orderData.x1, yestimado, legend = false, color = "blue")
 
         display(plt)
 
@@ -92,7 +92,7 @@ export vpch, vpta
         xGridt = [ones(size(x0,1)) log.(x0)]
         yestimado = xGridt.*Bhat
 
-        plt = scatter(xGrid[:,2], yestimado, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Altura (m)", grid_linewidth = 0, color = "green", legend = false)
+        plt = scatter(xGrid[:,2], yestimado, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Volume (m³)", grid_linewidth = 0, color = "green", legend = false)
         plt = plot!(dap, h)
         
         display(plt)

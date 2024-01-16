@@ -117,7 +117,7 @@ ApplicationWindow {
         }
         FileDialog {
             id: saveDialog
-            title: "Selecione o arquivo no formato .CSV com os dados a serem processados"
+            title: "Selecione o local para salvar o arquivo..."
             fileMode: FileDialog.SaveFile
             currentFolder: standardLocations(StandardPaths.HomeLocation)[0]
             onAccepted: {
