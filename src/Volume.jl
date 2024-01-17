@@ -88,8 +88,8 @@ export vpch, vpta
         b=D*Z'*inv(Z*D*Z'+R)*RES
         Bhat= round.(Bfixo+b, digits = 7)
         x0= 5:0.001:45
-        xGrid = [ones(size(x0,1)) x0]
-        xGridt = [ones(size(x0,1)) log.(x0)]
+        xGrid = [ones(size(x0,1)) x0 x0]
+        xGridt = [ones(size(x0,1)) log.(x0) log.(x0)]
         yestimado = xGridt.*Bhat
 
         plt = scatter(xGrid[:,2], yestimado, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Volume (m³)", grid_linewidth = 0, color = "green", legend = false)
