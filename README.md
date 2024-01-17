@@ -35,4 +35,5 @@ Pkg.add(url="https://github.com/renilsonlisboa/CalPin.jl")
 Para começar a usar o pacote CalPin, primeiro, você precisa instalá-lo. Abra o REPL do Julia e execute o seguinte comando:
 
 ```julia
-CalPin()
+using CalPin
+CalcPin()
