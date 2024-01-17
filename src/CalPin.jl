@@ -1,4 +1,4 @@
-module CalcPin
+module CalPin
 
 # Inclui os módulos auxiliares no projeto
 include(joinpath(@__DIR__, "Altura.jl"))
@@ -7,7 +7,7 @@ include(joinpath(@__DIR__, "Plot.jl"))
 
 import QML: QString, @qmlfunction, loadqml, exec
 
-export CalPin
+export CalcPin
 
     # Função de calibração da altura do Pinus maximinoi
     function hpma(dados, save)
@@ -38,7 +38,7 @@ export CalPin
     end
 
     # Define a função de inicialização do app
-    function CalPin()
+    function CalcPin()
 
         # Exporta as funções do Julia para o QML(JavaScript)
         @qmlfunction hpma hpta vpch vpta plot_result init_backend 
