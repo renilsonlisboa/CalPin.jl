@@ -90,7 +90,7 @@ export vpch, vpta
         x0= 5:0.001:45
         xGrid = [ones(size(x0,1)) x0 x0]
         xGridt = [ones(size(x0,1)) log.(x0) log.(x0)]
-        yestimado = xGridt.*Bhat
+        yestimado = xGridt*Bhat
 
         plt = scatter(xGrid[:,2], yestimado, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Volume (m³)", grid_linewidth = 0, color = "green", legend = false)
         plt = plot!(dap, h)
