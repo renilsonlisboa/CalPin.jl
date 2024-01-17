@@ -1,9 +1,9 @@
 module CalPin
 
 # Inclui os módulos auxiliares no projeto
-include(joinpath(@__DIR__, "src/Altura.jl"))
-include(joinpath(@__DIR__, "src/Volume.jl"))
-include(joinpath(@__DIR__, "src/Plot.jl"))
+include(joinpath(@__DIR__, "Altura.jl"))
+include(joinpath(@__DIR__, "Volume.jl"))
+include(joinpath(@__DIR__, "Plot.jl"))
 
 import QML: QString, @qmlfunction, loadqml, exec
 

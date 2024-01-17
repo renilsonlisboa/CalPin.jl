@@ -50,9 +50,9 @@ export vpch, vpta
         plt = scatter([x = dap for x in 1:3], [y = v for y in 1:3], xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Volume (m³)", grid_linewidth = 0, color = "green")
         plt = plot!(orderData.x1, yestimado, legend = false, color = "blue")
 
-        display(plt)
-
         savefig("$(cleaned_path).png")
+
+        display(plt)
 
         return [Bfixo, Bhat] 
 
@@ -94,10 +94,10 @@ export vpch, vpta
 
         plt = scatter(xGrid[:,2], yestimado, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Volume (m³)", grid_linewidth = 0, color = "green", legend = false)
         plt = plot!(dap, h)
-        
-        display(plt)
 
         savefig("$(cleaned_path).png")
+                
+        display(plt)
 
         return [Bfixo, Bhat]
 
