@@ -10,11 +10,13 @@ ApplicationWindow {
     visible: true
     width: 640
     height: 480
+
     title: "Calibração da Altura do Pinus taeda"
 
     property string conclusionText: "" // Nova propriedade para armazenar o texto do resultado
     property var bfixo: [1.0, 2.0] // Nova propriedade para armazenar o texto do resultado
     property var best: [1.0, 2.0] // Nova propriedade para armazenar o texto do resultado
+    property var columnVectorsVals: []
 
     // Defina variáveis para armazenar os dados dos campos de texto
     Image {
@@ -43,37 +45,13 @@ ApplicationWindow {
 
         FileDialog {
             id: saveDialog
-            title: "Selecione o arquivo no formato .CSV com os dados a serem processados"
+            title: "Selecione o local para salvar o arquivo..."
             fileMode: FileDialog.SaveFile
-            currentFolder: standardLocations(StandardPaths.HomeLocation)[0]
             onAccepted: {
-                var columnVectors = [];
-
-                // Inicializa vetores para cada coluna
-                for (var i = 0; i < gridLayout.columns; i++) {
-                    columnVectors.push([]);
-                }
-
-                // Itera pelos filhos do GridLayout
-                for (var j = 0; j < gridLayout.children.length; j++) {
-                    // Adiciona os valores dos TextField aos vetores correspondentes
-                    if (gridLayout.children[j] instanceof TextField) {
-                        var columnIndex = j % gridLayout.columns;
-                        columnVectors[columnIndex].push(gridLayout.children[j].text);
-                    }
-                }
-
-                if (columnVectors.length < 18) {
-                    emptyDialog.open();
-                } else {
-
-                    var resultado = Julia.hpta(columnVectors, saveDialog.selectedFile)
-
-                    bfixo = resultado[0]
-                    best = resultado[1]
-
-                    conclusionDialog.open();
-                }
+                var resultado = Julia.hpma(columnVectorsVals, saveDialog.selectedFile);
+                bfixo = resultado[0];
+                best = resultado[1];
+                conclusionDialog.open();
             }
             Component.onCompleted: visible = false
         }
@@ -103,6 +81,31 @@ ApplicationWindow {
         Layout.rowSpan: 9 // Estende-se por 9 linhas
         Layout.columnSpan: 2// Estende-se por 2 colunas
         onClicked: {
+            var columnVectors = [];
+
+            // Inicializa vetores para cada coluna
+            for (var i = 0; i < gridLayout.columns; i++) {
+                columnVectors.push([]);
+            }
+
+            // Itera pelos filhos do GridLayout
+            for (var j = 0; j < gridLayout.children.length; j++) {
+                // Adiciona os valores dos TextField aos vetores correspondentes
+                if (gridLayout.children[j] instanceof TextField) {
+                    var columnIndex = j % gridLayout.columns;
+                    var textValue = gridLayout.children[j].text.trim(); // Remove espaços em branco
+
+                    // Verifica se o valor é vazio ou nulo
+                    if (textValue === "") {
+                        emptyDialog.open();
+                        return; // Aborta o processamento se dados estiverem faltando
+                    }
+
+                    columnVectors[columnIndex].push(textValue);
+
+                }
+            }
+            columnVectorsVals = columnVectors
             saveDialog.open()
         }
     }
