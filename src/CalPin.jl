@@ -7,7 +7,7 @@ include(joinpath(@__DIR__, "Plot.jl"))
 
 import QML: QString, @qmlfunction, loadqml, exec
 
-export run
+export RunApp()
 
     # Função de calibração da altura do Pinus maximinoi
     function hpma(dados, save)
@@ -38,7 +38,7 @@ export run
     end
 
     # Define a função de inicialização do app
-    function run()
+    function RunApp()
 
         # Exporta as funções do Julia para o QML(JavaScript)
         @qmlfunction hpma hpta vpch vpta plot_result init_backend 
