@@ -7,7 +7,7 @@ include(joinpath(@__DIR__, "Plot.jl"))
 
 import QML: QString, @qmlfunction, loadqml, exec
 
-export RunApp()
+export RunApp
 
     # Função de calibração da altura do Pinus maximinoi
     function hpma(dados, save)
