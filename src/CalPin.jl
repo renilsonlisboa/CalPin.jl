@@ -47,7 +47,7 @@ export RunApp
         current_directory = dirname(@__FILE__)
 
         # Carrega o arquivo .qml presente no diretório do pacote
-        loadqml(joinpath(current_directory, "src/qml", "teste.qml"))
+        loadqml(joinpath(current_directory, "src/qml", "main.qml"))
 
         # Inicializa o arquivo .qml
         exec()
