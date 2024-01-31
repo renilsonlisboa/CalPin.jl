@@ -1,5 +1,7 @@
 module CalPin
 
+using PrecompileTools    # this is a small dependency
+
 # Inclui os módulos auxiliares no projeto
 include(joinpath(@__DIR__, "Altura.jl"))
 include(joinpath(@__DIR__, "Volume.jl"))
@@ -7,6 +9,25 @@ include(joinpath(@__DIR__, "Volume.jl"))
 import QML: QString, @qmlfunction, loadqml, exec
 
 export RunApp
+
+    const _precompile_enabled = true
+    const _precompile_statements = []
+
+    function _include_everything(path)
+        for (root, dirs, files) in walkdir(path)
+            for file in files
+                if endswith(file, ".jl")
+                    include(joinpath(root, file))
+                end
+            end
+        end
+    end
+
+    _include_everything(joinpath(@__DIR__, "src"))
+
+    if _precompile_enabled
+        _precompile_()
+    end
 
     # Função de calibração da altura do Pinus maximinoi
     function hpma(dados, save)
@@ -44,5 +65,4 @@ export RunApp
         exec()
 
     end
-
 end
