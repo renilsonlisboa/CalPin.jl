@@ -7,11 +7,15 @@ import org.julialang
 ApplicationWindow {
     id: mainAPP
     title: "CalPin"
-    width: 780
+    width: 360
     height: 640
     x: (Screen.width - width) / 2 // Centralizar horizontalmente
     y: (Screen.height - height) / 2 // Centralizar verticalmente
     visible: true
+    minimumWidth: 360
+    maximumWidth: 360
+    minimumHeight: 640
+    maximumHeight: 640
 
     // Define as váriveis globais para uso no APP
     property string conclusionText: "" // Nova propriedade para armazenar o texto do resultado
@@ -31,9 +35,8 @@ ApplicationWindow {
             id: backgroundImage
             width: parent.width
             height: parent.height
-            opacity: 0.85
-            source: "images/wallpaper.jpg" // Substitua pelo caminho real da sua imagem
-            fillMode: Image.Stretch
+            source: "images/background.jpg" // Substitua pelo caminho real da sua imagem
+            fillMode: Image.PreserveAspectFit
         }
 
         // Lista com as variáveis passiveis de serem utilizadas
@@ -197,6 +200,10 @@ ApplicationWindow {
         title: "Calibração da Altura do Pinus maximinoi"
         width: 780
         height: 640
+        minimumWidth: 780
+        maximumWidth: 780
+        minimumHeight: 640
+        maximumHeight: 640
         x: (Screen.width - width) / 2 // Centralizar horizontalmente
         y: (Screen.height - height) / 2 // Centralizar verticalmente
         visible: false
@@ -219,8 +226,9 @@ ApplicationWindow {
             anchors.verticalCenterOffset: -50
             spacing: 10
 
-            // Adicione 21 campos de entrada (TextField)
+            // Adicione 18 campos de entrada (TextField)
             Repeater {
+                id: enterDataHPMA
                 model: 18
                 TextField {
                     placeholderText: (index % 2 === 0) ? "Dap (cm)" : 
@@ -229,6 +237,14 @@ ApplicationWindow {
                     width: 120
                     height: 30
                     font.pixelSize: 14
+
+                    Connections {
+                        onTextChanged: {
+                            if (text.includes(",")) {
+                                text = text.replace(/,/g, ".");
+                            }
+                        }
+                    }
                 }
             }
 
@@ -246,6 +262,9 @@ ApplicationWindow {
                         bfixo = resultado[0]
                         best = resultado[1]
                         conclusionDialogHPMA.open()
+                        busyIndicatorHPMA.running = false
+                    }
+                    onRejected: {
                         busyIndicatorHPMA.running = false
                     }
                 }
@@ -291,7 +310,6 @@ ApplicationWindow {
             font.family: "Arial"
             font.bold: true
             font.pointSize: 14
-
             font.pixelSize: 14
             Layout.rowSpan: 9 // Estende-se por 9 linhas
             Layout.columnSpan: 2 // Estende-se por 2 colunas
@@ -299,8 +317,6 @@ ApplicationWindow {
             Connections {
                 target: calibraHPMA
                 onClicked: {
-
-                    busyIndicatorHPMA.running = true
 
                     var columnVectors = []
 
@@ -327,14 +343,31 @@ ApplicationWindow {
                             columnVectors[columnIndex].push(textValue)
                         }
                     }
+                    busyIndicatorHPMA.running = true
                     columnVectorsVals = columnVectors
                     saveDialogHPMA.open()
                 }
             }
         }
+
         Connections {
             target: windowHPMA
-            onClosing: mainAPP.visible = true
+            onClosing: {
+                mainAPP.visible = true
+                windowHPMA.width = 780
+                windowHPMA.height = 640
+                windowHPMA.minimumWidth = 780
+                windowHPMA.maximumWidth = 780
+                windowHPMA.minimumHeight = 640
+                windowHPMA.maximumHeight = 640
+                for (var i = 0; i < gridLayoutHPMA.columns; i++) {
+                    for (var j = 0; j < gridLayoutHPMA.children.length; j++) {
+                        if (gridLayoutHPMA.children[j] instanceof TextField) {
+                            gridLayoutHPMA.children[j].text = ""
+                        }
+                    }
+                }
+            }    
         }
     }
 
@@ -343,6 +376,10 @@ ApplicationWindow {
         title: "Calibração da Altura do Pinus taeda"
         width: 780
         height: 640
+        minimumWidth: 780
+        maximumWidth: 780
+        minimumHeight: 640
+        maximumHeight: 640
         x: (Screen.width - width) / 2 // Centralizar horizontalmente
         y: (Screen.height - height) / 2 // Centralizar verticalmente
         visible: false
@@ -352,7 +389,7 @@ ApplicationWindow {
             id: backgroundImageHPTA
             width: parent.width
             height: parent.height
-            opacity: 0.9
+            opacity: 0.85
             source: "images/wallpaper.jpg" // Substitua pelo caminho real da sua imagem
             fillMode: Image.Stretch
         }
@@ -362,9 +399,10 @@ ApplicationWindow {
             id: gridLayoutHPTA
             columns: 2
             anchors.centerIn: parent
+            anchors.verticalCenterOffset: -50
             spacing: 10
 
-            // Adicione 21 campos de entrada (TextField)
+            // Adicione 18 campos de entrada (TextField)
             Repeater {
                 model: 18
                 TextField {
@@ -374,6 +412,14 @@ ApplicationWindow {
                     width: 120
                     height: 30
                     font.pixelSize: 14
+
+                    Connections {
+                        onTextChanged: {
+                            if (text.includes(",")) {
+                                text = text.replace(/,/g, ".");
+                            }
+                        }
+                    }
                 }
             }
 
@@ -393,7 +439,11 @@ ApplicationWindow {
                         conclusionDialogHPTA.open()
                         busyIndicatorHPTA.running = false
                     }
+                    onRejected: {
+                        busyIndicatorHPTA.running = false
+                    }
                 }
+
                 Component.onCompleted: visible = false
             }
 
@@ -402,9 +452,7 @@ ApplicationWindow {
                 id: conclusionDialogHPTA
                 title: "Calibração Concluida com Sucesso"
                 buttons: MessageDialog.Ok
-                text: " Coeficientes estimados, parte aleatória \nβ0 = " + bfixo[0]
-                + "\nβ1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = "
-                + best[0] + "\nβ1 = " + best[1]
+                text: "Coeficientes estimados, parte aleatória \nb0 = " + bfixo[0] + "\nb1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = " + best[0] + "\nβ1 = " + best[1]
             }
 
             // Dialogo de FALTA DE DADOS 
@@ -431,9 +479,11 @@ ApplicationWindow {
             text: "Calibrar Dados"
             padding: 10
             width: 250
+            height: 30
             anchors.centerIn: gridLayoutHPTA
             anchors.verticalCenterOffset: 200
             font.bold: true
+            font.pointSize: 14
             font.pixelSize: 14
             font.family: "Arial"
             Layout.rowSpan: 9 // Estende-se por 9 linhas
@@ -442,7 +492,7 @@ ApplicationWindow {
             Connections {
                 target: calibraHPTA
                 onClicked: {
-                    busyIndicatorHPTA.running = true
+
                     var columnVectors = []
 
                     // Inicializa vetores para cada coluna
@@ -468,6 +518,7 @@ ApplicationWindow {
                             columnVectors[columnIndex].push(textValue)
                         }
                     }
+                    busyIndicatorHPTA.running = true
                     columnVectorsVals = columnVectors
                     saveDialogHPTA.open()
                 }
@@ -475,15 +526,34 @@ ApplicationWindow {
         }
         Connections {
             target: windowHPTA
-            onClosing: mainAPP.visible = true
+            onClosing: {
+                mainAPP.visible = true
+                windowHPTA.width = 780
+                windowHPTA.height = 640
+                windowHPTA.minimumWidth = 780
+                windowHPTA.maximumWidth = 780
+                windowHPTA.minimumHeight = 640
+                windowHPTA.maximumHeight = 640
+                for (var i = 0; i < gridLayoutHPTA.columns; i++) {
+                    for (var j = 0; j < gridLayoutHPTA.children.length; j++) {
+                        if (gridLayoutHPTA.children[j] instanceof TextField) {
+                            gridLayoutHPTA.children[j].text = ""
+                        }
+                    }
+                }
+            } 
         }
     }
 
     Window {
         id: windowVPCH
         title: "Calibração do Volume de Pinus caribaea hondurensis"
-        width: 780
-        height: 640
+        width: 640
+        height: 480
+        minimumWidth: 640
+        maximumWidth: 640
+        minimumHeight: 480
+        maximumHeight: 480
         x: (Screen.width - width) / 2 // Centralizar horizontalmente
         y: (Screen.height - height) / 2 // Centralizar verticalmente
         visible: false
@@ -495,29 +565,34 @@ ApplicationWindow {
             // Defina variáveis para armazenar os dados dos campos de texto
             Image {
                 id: backgroundImageVPCH
+                width: parent.width
+                height: parent.height
+                opacity: 0.85
                 source: "images/wallpaper.jpg" // Substitua pelo caminho real da sua imagem
                 fillMode: Image.Stretch
             }
 
             Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                y: 75
+                anchors.centerIn: parent
+                anchors.verticalCenterOffset: -70
                 spacing: 10
 
                 // Estilo para a entrada de dados Dap
                 TextField {
                     id: dap
-                    placeholderText: qsTr("Dap (cm)")
+                    placeholderText: "Dap (cm)"
                     width: 120
                     height: 30
                     font.pixelSize: 14
-                    background: Rectangle {
-                        color: "white"
-                        border.color: "darkgray"
-                        border.width: 1
-                        radius: 5
-                    }
                     horizontalAlignment: TextInput.AlignHCenter
+                    Connections {
+                        target: dap
+                        onTextChanged: {
+                            if (dap.text.includes(",")) {
+                                dap.text = dap.text.replace(/,/g, ".");
+                            }
+                        }
+                    }
                 }
 
                 // Estilo para a entrada de dados Altura
@@ -527,13 +602,16 @@ ApplicationWindow {
                     width: 120
                     height: 30
                     font.pixelSize: 14
-                    background: Rectangle {
-                        color: "white"
-                        border.color: "darkgray"
-                        border.width: 1
-                        radius: 5
-                    }
                     horizontalAlignment: TextInput.AlignHCenter
+                
+                    Connections {
+                        target: h
+                        onTextChanged: {
+                            if (h.text.includes(",")) {
+                                h.text = h.text.replace(/,/g, ".");
+                            }
+                        }
+                    }
                 }
 
                 // Estilo para a entrada de dados Volume
@@ -542,14 +620,17 @@ ApplicationWindow {
                     placeholderText: qsTr("Volume (m³)")
                     width: 120
                     height: 30
-                    font.pixelSize: 14
-                    background: Rectangle {
-                        color: "white"
-                        border.color: "darkgray"
-                        border.width: 1
-                        radius: 5
-                    }
                     horizontalAlignment: TextInput.AlignHCenter
+                    font.pixelSize: 14
+
+                    Connections {
+                        target: v
+                        onTextChanged: {
+                            if (v.text.includes(",")) {
+                                v.text = v.text.replace(/,/g, ".");
+                            }
+                        }
+                    }
                 }
             }
 
@@ -557,10 +638,11 @@ ApplicationWindow {
             Button {
                 id: calibrarVPCH
                 text: "Calibrar"
+                width: 180
                 anchors.centerIn: parent
                 padding: 10
                 font.bold: true
-                font.pixelSize: 16
+                font.pixelSize: 18
                 anchors.verticalCenterOffset: 50
 
                 Connections {
@@ -588,11 +670,22 @@ ApplicationWindow {
                             emptyDialogVPCH.open()
                         } else {
                             // Aqui você pode adicionar a lógica para processar os dados inseridos
+                            busyIndicatorVPCH.running = true
                             saveDialogVPCH.open()
                         }
                     }
                 }
             }
+
+            BusyIndicator {
+                id: busyIndicatorVPCH
+                width: 120
+                height: 120
+                running: false
+                anchors.centerIn: parent
+                anchors.verticalCenterOffset: 180
+            }
+
             FileDialog {
                 id: saveDialogVPCH
                 title: "Selecione o local para salvar o arquivo..."
@@ -602,12 +695,16 @@ ApplicationWindow {
                     target: saveDialogVPCH
                     onAccepted: {
                         var resultado = Julia.vpch(dap.text, h.text, v.text,
-                                                   saveDialog.selectedFile)
+                                                   saveDialogVPCH.selectedFile)
 
                         bfixo = resultado[0]
                         best = resultado[1]
 
                         conclusionDialogVPCH.open()
+                        busyIndicatorVPCH.running = false
+                    }
+                    onRejected: {
+                        busyIndicatorVPCH.running = false
                     }
                 }
 
@@ -617,9 +714,7 @@ ApplicationWindow {
                 id: conclusionDialogVPCH
                 title: "Calibração Concluida com Sucesso"
                 buttons: MessageDialog.Ok
-                text: " Coeficientes estimados, parte aleatória \nβ0 = " + bfixo[0]
-                + "\nβ1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = "
-                + best[0] + "\nβ1 = " + best[1]
+                text: "Coeficientes estimados, parte aleatória \nb0 = " + bfixo[0] + "\nb1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = " + best[0] + "\nβ1 = " + best[1]
             }
             MessageDialog {
                 id: emptyDialogVPCH
@@ -629,29 +724,49 @@ ApplicationWindow {
         }
         Connections {
             target: windowVPCH
-            onClosing: mainAPP.visible = true
+            onClosing: {
+                mainAPP.visible = true
+                windowVPCH.width = 640
+                windowVPCH.height = 480
+                windowVPCH.minimumWidth = 640
+                windowVPCH.maximumWidth = 640
+                windowVPCH.minimumHeight = 480
+                windowVPCH.maximumHeight = 480
+                v.text = ""
+                h.text = ""
+                dap.text = ""
+            }
         }
     }
+
     Window {
         id: windowVPTA
-        visible: false
-        width: 640
-        height: 480
+        title: "Calibração da Altura do Pinus taeda"
+        width: 780
+        height: 640
+        minimumWidth: 780
+        maximumWidth: 780
+        minimumHeight: 640
+        maximumHeight: 640
         x: (Screen.width - width) / 2 // Centralizar horizontalmente
         y: (Screen.height - height) / 2 // Centralizar verticalmente
-
-        title: "Calibração da Altura do Pinus taeda"
-
+        visible: false
+        
         // Defina variáveis para armazenar os dados dos campos de texto
         Image {
             id: backgroundImageVPTA
+            width: parent.width
+            height: parent.height
+            opacity: 0.85
             source: "images/wallpaper.jpg" // Substitua pelo caminho real da sua imagem
+            fillMode: Image.Stretch        
         }
 
         Grid {
             id: gridLayoutVPTA
             columns: 3
             anchors.centerIn: parent
+            anchors.verticalCenterOffset: -50
             spacing: 10
 
             // Adicione 21 campos de entrada (TextField)
@@ -663,6 +778,14 @@ ApplicationWindow {
                     width: 120
                     height: 30
                     font.pixelSize: 14
+
+                    Connections {
+                        onTextChanged: {
+                            if (text.includes(",")) {
+                                text = text.replace(/,/g, ".");
+                            }
+                        }
+                    }
                 }
             }
 
@@ -679,6 +802,10 @@ ApplicationWindow {
                         bfixo = resultado[0]
                         best = resultado[1]
                         conclusionDialogVPTA.open()
+                        busyIndicatorVPTA.running = false
+                    }
+                    onRejected: {
+                        busyIndicatorVPTA.running = false
                     }
                 }
                 Component.onCompleted: visible = false
@@ -687,9 +814,7 @@ ApplicationWindow {
                 id: conclusionDialogVPTA
                 title: "Calibração Concluida com Sucesso"
                 buttons: MessageDialog.Ok
-                text: " Coeficientes estimados, parte aleatória \nβ0 = " + bfixo[0]
-                + "\nβ1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = "
-                + best[0] + "\nβ1 = " + best[1]
+                text: "Coeficientes estimados, parte aleatória \nb0 = " + bfixo[0] + "\nb1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = " + best[0] + "\nβ1 = " + best[1]
             }
             MessageDialog {
                 id: emptyDialogVPTA
@@ -699,16 +824,28 @@ ApplicationWindow {
             }
         }
 
+        BusyIndicator {
+            id: busyIndicatorVPTA
+            width: 120
+            height: 120
+            running: false
+            anchors.centerIn: parent
+            anchors.verticalCenterOffset: 250
+        }
+
         // Botão para processar os dados
         Button {
             id: calibraVPTA
             text: "Calibrar Dados"
             padding: 10
             width: 250
+            height: 30
             anchors.centerIn: gridLayoutVPTA
             anchors.verticalCenterOffset: 200
             font.bold: true
-            font.pixelSize: 12
+            font.pointSize: 14
+            font.pixelSize: 14
+            font.family: "Arial"
             Layout.rowSpan: 7 // Estende-se por 9 linhas
             Layout.columnSpan: 3 // Estende-se por 2 colunas
 
@@ -740,14 +877,31 @@ ApplicationWindow {
                             columnVectors[columnIndex].push(textValue)
                         }
                     }
+                    busyIndicatorVPTA.running = true
                     columnVectorsVals = columnVectors
                     saveDialogVPTA.open()
                 }
             }
         }
+
         Connections {
             target: windowVPTA
-            onClosing: mainAPP.visible = true
+            onClosing: {
+                mainAPP.visible = true
+                windowVPTA.width = 780
+                windowVPTA.height = 640
+                windowVPTA.minimumWidth = 780
+                windowVPTA.maximumWidth = 780
+                windowVPTA.minimumHeight = 640
+                windowVPTA.maximumHeight = 640
+                for (var i = 0; i < gridLayoutVPTA.columns; i++) {
+                    for (var j = 0; j < gridLayoutVPTA.children.length; j++) {
+                        if (gridLayoutVPTA.children[j] instanceof TextField) {
+                            gridLayoutVPTA.children[j].text = ""
+                        }
+                    }
+                }
+            }
         }
     }
 
