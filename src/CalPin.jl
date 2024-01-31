@@ -3,7 +3,6 @@ module CalPin
 # Inclui os módulos auxiliares no projeto
 include(joinpath(@__DIR__, "src/Altura.jl"))
 include(joinpath(@__DIR__, "src/Volume.jl"))
-include(joinpath(@__DIR__, "src/Plot.jl"))
 
 import QML: QString, @qmlfunction, loadqml, exec
 
@@ -29,19 +28,11 @@ export RunApp
         Volume.vpta(dados, save)
     end
 
-    function init_backend(width, height)
-        Plot.init_backend(width, height)
-    end
-
-    function plot_result(d, plt)
-        Plot.plot_result(d, plt)
-    end
-
     # Define a função de inicialização do app
     function RunApp()
 
         # Exporta as funções do Julia para o QML(JavaScript)
-        @qmlfunction hpma hpta vpch vpta plot_result init_backend 
+        @qmlfunction hpma hpta vpch vpta 
 
         # Localiza o diretório padrão onde o pacote foi instalado
         current_directory = dirname(@__FILE__)

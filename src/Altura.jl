@@ -27,6 +27,9 @@ export hpta, hpma
         # Remover o prefixo "file:///"
         cleaned_path = replace(save_s, "file:///" => "")
 
+        # Remove o sufixo da URL (extensão caso selecionada)
+        cleaned_path = split(cleaned_path, ".")[1]
+
         # Cálculos de calibração
         Bfixo=[-2.4286; 5.8784]
         D=[4.3734 1.2910; 1.2910 0.6303]
@@ -77,6 +80,9 @@ export hpta, hpma
 
         # Remover o prefixo "file:///"
         cleaned_path = replace(save_s, "file:///" => "")
+
+        # Remove o sufixo da URL (extensão caso selecionada)
+        cleaned_path = split(cleaned_path, ".")[1]
 
         Bfixo=[-2.4286; 5.8784]
         D=[4.3734 1.2910; 1.2910 0.6303]
