@@ -23,14 +23,14 @@ Para calcular o volume, as opções disponíveis são:
 
 ## Instalação
 
-O pacote **CalPin** pode ser adicionar de duas diferentes formas podendo-se optar por:
+Para a utilização do pacote **CalPin** primeiramente é necessário instalr. Para isso o usuário pode optar por dois diferentes métodos de instalação. Sendo eles por meio dos comandos **using Pkg** e **Pkg.add(url="https://github.com/renilsonlisboa/CalPin.jl")** inseridos diretamente no terminal do Julia.
 
 ```julia
 using Pkg
 Pkg.add(url="https://github.com/renilsonlisboa/CalPin.jl")
 ```
 
-Ou então pelo método integrado do Julia via ]
+Também é possível a instalação do pacote por meio do **modo de gerenciamento de pacotes**, para isso basta apenas utilizar o comando **] add https://github.com/renilsonlisboa/CalPin.jl**
 
 ```julia
 ] add https://github.com/renilsonlisboa/CalPin.jl
@@ -38,8 +38,7 @@ Ou então pelo método integrado do Julia via ]
 
 ## Inicio
 
-Após instalado o pacote **CalPin** o usuário poderá iniciar o pacote através dos comandos abaixo
-
+Após a conclusão da instalação do pacote, o usuário deverá iniciar o mesmo através dos comandos **using CalPin** e **RunApp()**
 ```julia
 using CalPin
 RunApp()
