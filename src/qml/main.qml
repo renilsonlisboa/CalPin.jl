@@ -275,7 +275,7 @@ ApplicationWindow {
             // Abre o dialogo de conclusão da calibração
             MessageDialog {
                 id: conclusionDialogHPMA
-                title: "Calibração Concluida com Sucesso"
+                title: "Calibração Concluída com Sucesso"
                 buttons: MessageDialog.Ok
                 text: "Coeficientes estimados, parte aleatória \nb0 = " + bfixo[0] + "\nb1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = " + best[0] + "\nβ1 = " + best[1]
             }
@@ -301,7 +301,7 @@ ApplicationWindow {
         // Botão de calibraçãod do HPMA
         Button {
             id: calibraHPMA
-            text: "Calibrar Dados"
+            text: "Calibrar Equação"
             padding: 10
             width: 250
             height: 30
@@ -450,7 +450,7 @@ ApplicationWindow {
             // Dialogo de conclusão do processamento
             MessageDialog {
                 id: conclusionDialogHPTA
-                title: "Calibração Concluida com Sucesso"
+                title: "Calibração Concluída com Sucesso"
                 buttons: MessageDialog.Ok
                 text: "Coeficientes estimados, parte aleatória \nb0 = " + bfixo[0] + "\nb1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = " + best[0] + "\nβ1 = " + best[1]
             }
@@ -476,7 +476,7 @@ ApplicationWindow {
         // Botão de inicialização do processamento
         Button {
             id: calibraHPTA
-            text: "Calibrar Dados"
+            text: "Calibrar Equação"
             padding: 10
             width: 250
             height: 30
@@ -637,7 +637,7 @@ ApplicationWindow {
             // Botão para calibrar os dados (opcional)
             Button {
                 id: calibrarVPCH
-                text: "Calibrar"
+                text: "Calibrar Equação"
                 width: 180
                 anchors.centerIn: parent
                 padding: 10
@@ -712,7 +712,7 @@ ApplicationWindow {
             }
             MessageDialog {
                 id: conclusionDialogVPCH
-                title: "Calibração Concluida com Sucesso"
+                title: "Calibração Concluída com Sucesso"
                 buttons: MessageDialog.Ok
                 text: "Coeficientes estimados, parte aleatória \nb0 = " + bfixo[0] + "\nb1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = " + best[0] + "\nβ1 = " + best[1]
             }
@@ -812,7 +812,7 @@ ApplicationWindow {
             }
             MessageDialog {
                 id: conclusionDialogVPTA
-                title: "Calibração Concluida com Sucesso"
+                title: "Calibração Concluída com Sucesso"
                 buttons: MessageDialog.Ok
                 text: "Coeficientes estimados, parte aleatória \nb0 = " + bfixo[0] + "\nb1 = " + bfixo[1] + "\n\nCoeficientes calibrados \nβ0 = " + best[0] + "\nβ1 = " + best[1]
             }
@@ -836,7 +836,7 @@ ApplicationWindow {
         // Botão para processar os dados
         Button {
             id: calibraVPTA
-            text: "Calibrar Dados"
+            text: "Calibrar Equação"
             padding: 10
             width: 250
             height: 30
