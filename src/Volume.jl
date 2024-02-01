@@ -111,7 +111,7 @@ export vpch, vpta
 
         # Gera o gráfico do ajusto
         plt = plot(x0, yestimado, xlabel = "d²h (cm²m)", ylabel = "Volume (m³)", ylim =(0, maximum(yestimado)), grid_linewidth = 0, color = "green", legend = false, ms = 6)
-        plt = scatter!(dap, v, ylim = (0, maximum(yestimado)))
+        plt = scatter!((dap^2*h), v, ylim = (0, maximum(yestimado)))
 
         # Salva o resultado gerado
         savefig("$(cleaned_path).png")
