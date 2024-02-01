@@ -107,7 +107,7 @@ export vpch, vpta
         yestimado = xGridt*Bhat
 
         # Gera o gráfico do ajusto
-        plt = scatter(dap, h)
+        plt = scatter(dap, v)
         plt = scatter!(xGrid[:,2], yestimado, xlabel = "Diâmetro à altura do peito (cm)", ylabel = "Volume (m³)", grid_linewidth = 0, color = "green", legend = false, ms = 6)
 
         # Salva o resultado gerado
