@@ -38,6 +38,8 @@ export RunApp
         # Localiza o diretório padrão onde o pacote foi instalado
         current_directory = dirname(@__FILE__)
 
+        current_directory = replace(current_directory, "Usußrio" => "Usuário")
+
         # Carrega o arquivo .qml presente no diretório do pacote
         loadqml(joinpath(current_directory, "qml", "main.qml"))
 
