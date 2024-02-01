@@ -2,7 +2,7 @@ module Volume
 
 # Importa os pacotes 
 import QML: QString
-import Plots: scatter!, scatter, savefig
+import Plots: scatter!, scatter, plot, savefig
 import LinearAlgebra: diagm
 import DataFrames: DataFrame
 
@@ -52,7 +52,7 @@ export vpch, vpta
         yestimado = exp.(yestimado)
 
         # Gera o gráfico do ajuste
-        plt = scatter(x0, yestimado, legend = false, color = "blue")
+        plt = plot(x0, yestimado, legend = false, color = "blue")
         plt = scatter!([x = ((dap^2)*h) for x in 1:3], [y = v for y in 1:3], xlabel = "d²h", ylabel = "Volume (m³)", grid_linewidth = 0, color = "green", ms = 6)
         
         # Salva a figura gerada
