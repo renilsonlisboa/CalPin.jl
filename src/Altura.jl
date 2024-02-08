@@ -85,7 +85,7 @@ export hpta, hpma
         cleaned_path = split(cleaned_path, ".")[1]
 
         Bfixo=[-2.5135; 7.2759]
-        D=[23.1108, -2.2259; -2.2259, 1.5952]
+        D=[23.1108 -2.2259; -2.2259 1.5952]
         R =[6.4984]     
         n=size(dap,1)       
         R=diagm(repeat(R, inner = n))        
