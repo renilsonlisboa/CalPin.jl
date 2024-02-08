@@ -236,7 +236,7 @@ ApplicationWindow {
                     horizontalAlignment: Text.AlignHCenter
                     width: 120
                     height: 30
-                    font.pixelSize: 14
+                    font.pointSize: 14
 
                     Connections {
                         onTextChanged: {
@@ -310,7 +310,6 @@ ApplicationWindow {
             font.family: "Arial"
             font.bold: true
             font.pointSize: 14
-            font.pixelSize: 14
             Layout.rowSpan: 9 // Estende-se por 9 linhas
             Layout.columnSpan: 2 // Estende-se por 2 colunas
 
@@ -411,7 +410,7 @@ ApplicationWindow {
                     horizontalAlignment: Text.AlignHCenter
                     width: 120
                     height: 30
-                    font.pixelSize: 14
+                    font.pointSize: 14
 
                     Connections {
                         onTextChanged: {
@@ -484,7 +483,6 @@ ApplicationWindow {
             anchors.verticalCenterOffset: 200
             font.bold: true
             font.pointSize: 14
-            font.pixelSize: 14
             font.family: "Arial"
             Layout.rowSpan: 9 // Estende-se por 9 linhas
             Layout.columnSpan: 2 // Estende-se por 2 colunas
@@ -583,7 +581,7 @@ ApplicationWindow {
                     placeholderText: "Dap (cm)"
                     width: 120
                     height: 30
-                    font.pixelSize: 14
+                    font.pointSize: 14
                     horizontalAlignment: TextInput.AlignHCenter
                     Connections {
                         target: dap
@@ -601,7 +599,7 @@ ApplicationWindow {
                     placeholderText: qsTr("Altura (m)")
                     width: 120
                     height: 30
-                    font.pixelSize: 14
+                    font.pointSize: 14
                     horizontalAlignment: TextInput.AlignHCenter
                 
                     Connections {
@@ -621,7 +619,7 @@ ApplicationWindow {
                     width: 120
                     height: 30
                     horizontalAlignment: TextInput.AlignHCenter
-                    font.pixelSize: 14
+                    font.pointSize: 14
 
                     Connections {
                         target: v
@@ -642,7 +640,7 @@ ApplicationWindow {
                 anchors.centerIn: parent
                 padding: 10
                 font.bold: true
-                font.pixelSize: 18
+                font.pointSize: 18
                 anchors.verticalCenterOffset: 50
 
                 Connections {
@@ -777,7 +775,7 @@ ApplicationWindow {
                     horizontalAlignment: Text.AlignHCenter
                     width: 120
                     height: 30
-                    font.pixelSize: 14
+                    font.pointSize: 14
 
                     Connections {
                         onTextChanged: {
@@ -844,7 +842,6 @@ ApplicationWindow {
             anchors.verticalCenterOffset: 200
             font.bold: true
             font.pointSize: 14
-            font.pixelSize: 14
             font.family: "Arial"
             Layout.rowSpan: 7 // Estende-se por 9 linhas
             Layout.columnSpan: 3 // Estende-se por 2 colunas

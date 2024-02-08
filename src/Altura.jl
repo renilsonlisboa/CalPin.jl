@@ -84,9 +84,9 @@ export hpta, hpma
         # Remove o sufixo da URL (extensão caso selecionada)
         cleaned_path = split(cleaned_path, ".")[1]
 
-        Bfixo=[-2.4286; 5.8784]
-        D=[4.3734 1.2910; 1.2910 0.6303]
-        R =[4.6233]     
+        Bfixo=[-2.5135; 7.2759]
+        D=[23.1108, -2.2259; -2.2259, 1.5952]
+        R =[6.4984]     
         n=size(dap,1)       
         R=diagm(repeat(R, inner = n))        
         Z= log.(dap)       
