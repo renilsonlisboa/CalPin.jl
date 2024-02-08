@@ -94,7 +94,7 @@ export hpta, hpma
         yhat = Z*Bfixo        
         RES= h.-yhat        
         b=D*Z'*inv(Z*D*Z'+R)*RES        
-        Bhat=Bfixo+b        
+        Bhat= round.(Bfixo+b, digits = 7)  
         x0= 5:0.001:45        
         xGrid = [ones(size(x0,1)) x0]        
         xGridt = [ones(size(x0,1)) log.(x0)]        
