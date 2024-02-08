@@ -90,10 +90,6 @@ export vpch, vpta
         # Remove o sufixo da URL (extensão caso selecionada)
         cleaned_path = split(cleaned_path, ".")[1]
 
-        dap = []
-
-        using Plots, DataFrames, Statistics, LinearAlgebra, Printf
-
         dap = [15.3, 22.0, 26.7, 28.3, 35.7, 20.0, 17.0]
         h = [16.1, 15.0, 17.4, 16.6, 18.1, 14.5, 15.5] 
         v = [0.151, 0.294, 0.372, 0.317, 0.736, 0.182,0.152]
