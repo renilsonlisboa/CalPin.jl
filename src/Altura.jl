@@ -107,7 +107,7 @@ export hpta, hpma
 
         display(plt)
 
-        return [Bfixo, Bhat]
+        return [b, Bhat]
     end
 
 end
