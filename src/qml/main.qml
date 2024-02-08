@@ -257,7 +257,7 @@ ApplicationWindow {
                 Connections {
                     target: saveDialogHPMA
                     onAccepted: {
-                        var resultado = Julia.hpta(columnVectorsVals,
+                        var resultado = Julia.hpma(columnVectorsVals,
                                                    saveDialogHPMA.selectedFile)
                         bfixo = resultado[0]
                         best = resultado[1]
@@ -431,7 +431,7 @@ ApplicationWindow {
                 Connections {
                     target: saveDialogHPTA
                     onAccepted: {
-                        var resultado = Julia.hpma(columnVectorsVals,
+                        var resultado = Julia.hpta(columnVectorsVals,
                                                    saveDialogHPTA.selectedFile)
                         bfixo = resultado[0]
                         best = resultado[1]
