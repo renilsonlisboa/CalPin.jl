@@ -1,8 +1,8 @@
 module CalPin
 
 # Inclui os módulos auxiliares no projeto
-include(joinpath(@__DIR__, "Altura.jl"))
-include(joinpath(@__DIR__, "Volume.jl"))
+include(joinpath(@__DIR__, "src/Altura.jl"))
+include(joinpath(@__DIR__, "src/Volume.jl"))
 
 # Importa as funções utilizadas
 import QML: QString, @qmlfunction, loadqml, exec
@@ -39,7 +39,7 @@ export RunApp
         current_directory = dirname(@__FILE__)
 
         # Carrega o arquivo .qml presente no diretório do pacote
-        loadqml(joinpath(current_directory, "qml", "main.qml"))
+        loadqml(joinpath(current_directory, "src/qml", "main.qml"))
 
         # Inicializa o arquivo .qml
         exec()

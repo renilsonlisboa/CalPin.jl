@@ -41,7 +41,7 @@ export hpta, hpma
         yhat = Z*Bfixo
         RES= h.-yhat
         b=D*Z'*inv(Z*D*Z'+R)*RES
-        Bhat= round.(Bfixo+b, digits = 7)
+        Bhat= round.(Bfixo+b, digits = 4)
         x0= 5:0.001:45
         xGrid = [ones(size(x0,1)) x0]
         xGridt = [ones(size(x0,1)) log.(x0)]
@@ -57,7 +57,7 @@ export hpta, hpma
         # Apresneta o gráfico criado em plt
         display(plt)
 
-        return [Bfixo, Bhat]
+        return [round.(b, digits = 4), Bhat]
 
     end
 
@@ -94,7 +94,7 @@ export hpta, hpma
         yhat = Z*Bfixo        
         RES= h.-yhat        
         b=D*Z'*inv(Z*D*Z'+R)*RES        
-        Bhat= round.(Bfixo+b, digits = 7)  
+        Bhat= round.(Bfixo+b, digits = 4)  
         x0= 5:0.001:45        
         xGrid = [ones(size(x0,1)) x0]        
         xGridt = [ones(size(x0,1)) log.(x0)]        
@@ -107,7 +107,7 @@ export hpta, hpma
 
         display(plt)
 
-        return [b, Bhat]
+        return [round.(b, digits = 4), Bhat]
     end
 
 end

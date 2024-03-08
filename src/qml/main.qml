@@ -26,9 +26,9 @@ ApplicationWindow {
     // Cria um retangulo para servir de base para inserir os demais objetos
     Rectangle {
         id: retangulo
-        visible: true
         width: parent.width
         height: parent.height
+        visible: true
 
         // Importa uma imagem para servir de background
         Image {
