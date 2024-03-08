@@ -113,8 +113,8 @@ export vpch, vpta
         orderData = sort(DataFrame([auxDap auxht yestimado ((auxDap.^2).*auxht)], :auto), :x4) 
 
         # Gera o gráfico do ajusto
-        scatter(orderData.x4, orderData.x3, xlabel = "d²h", label = (false))
-        scatter!(((dap.^2).*h), v, ylabel = "Volume (m³)", grid_linewidth = 0, color = "green", legend = false, ms = 6, xformatter=x -> replace(string(Int64.(x)), r"(\d)(?=(\d{3})+(?=\D|$))" => s"\1.")) 
+        plt = scatter(orderData.x4, orderData.x3, xlabel = "d²h", label = (false))
+        plt = scatter!(((dap.^2).*h), v, ylabel = "Volume (m³)", grid_linewidth = 0, color = "green", legend = false, ms = 6, xformatter=x -> replace(string(Int64.(x)), r"(\d)(?=(\d{3})+(?=\D|$))" => s"\1.")) 
         
         # Salva o resultado gerad
         savefig("$(cleaned_path).png")
