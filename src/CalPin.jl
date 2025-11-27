@@ -6,6 +6,7 @@ include(joinpath(@__DIR__, "Volume.jl"))
 
 # Importa as funções utilizadas
 import QML: QString, @qmlfunction, loadqml, exec
+import Base: redirect_stderr
 
 export RunApp
 
@@ -32,6 +33,12 @@ export RunApp
     # Define a função de inicialização do app
     function RunApp()
 
+        old_stderr = redirect_stderr(devnull)
+
+        # Restaurando a saída padrão e de erro
+        #redirect_stdout(old_stdout)
+        redirect_stderr(old_stderr)
+        
         # Exporta as funções do Julia para o QML(JavaScript)
         @qmlfunction hpma hpta vpch vpta 
 
